@@ -28,6 +28,15 @@
   .plan ul { padding-left:18px; margin:12px 0; color:var(--muted); font-size:.95rem; } .plan.best { border:2px solid var(--green2); }
   .tag { display:inline-block; background:var(--soft); color:var(--green); border-radius:99px; padding:2px 10px; font-size:.8rem; font-weight:700; }
   .note { background:var(--soft); border-radius:12px; padding:14px 16px; color:var(--text); }
+  .plan { cursor:pointer; transition:border-color .15s, box-shadow .15s; display:flex; flex-direction:column; }
+  .plan:hover, .plan:focus-visible { border-color:var(--green2); box-shadow:0 4px 16px rgba(0,0,0,.08); outline:none; }
+  .plan.chosen { border:2px solid var(--green2); background:var(--soft); }
+  .plan .pick { margin-top:auto; width:100%; }
+  .btn.solid { background:var(--green2); color:#fff; } .btn.solid:hover { background:var(--green); }
+  .req { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px; max-width:560px; }
+  .req label { display:block; font-weight:600; margin:10px 0 4px; font-size:.95rem; }
+  .req input, .req select { width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; font:inherit; background:var(--bg); color:var(--text); }
+  .req .send { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; } .req .err { color:#b00020; margin:8px 0 0; font-size:.9rem; }
   footer { border-top:1px solid var(--line); padding:24px 0; color:var(--muted); font-size:.9rem; }
   [data-am] { } .hide { display:none !important; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
@@ -65,14 +74,23 @@
 
 <section id="contact"><div class="wrap">
   <h2 data-t="c_h"></h2><p class="lead" data-t="c_lead"></p>
-  <div id="contacts"></div>
+  <form class="req" id="req" novalidate>
+    <label for="r_plan" data-t="r_plan"></label><select id="r_plan"></select>
+    <label for="r_name" data-t="r_name"></label><input id="r_name" autocomplete="name">
+    <label for="r_biz" data-t="r_biz"></label><input id="r_biz" autocomplete="organization">
+    <label for="r_phone" data-t="r_phone"></label><input id="r_phone" type="tel" autocomplete="tel">
+    <p class="err" id="r_err" role="alert"></p>
+    <div class="send" id="r_send"></div>
+  </form>
+  <div id="contacts" style="margin-top:18px"></div>
 </div></section>
 </main>
 <footer><div class="wrap"><span data-t="foot"></span> &copy; <span id="yr"></span> Zewderp</div></footer>
 
 <script>
 /* EDIT HERE: your contact details and prices. Empty contact lines are hidden. */
-var CONFIG = { phone: "0914348699", email: "haftshshady@gmail.com", telegram: "", address: "" };
+var CONFIG = { phone: "", email: "", telegram: "", whatsapp: "", address: "",
+  formUrl: "" /* optional: a Google Form or other page. If set, choosing a plan opens it with ?plan=starter|business|org */ };
 var PRICES = {  /* ETB. month = per month, year = per year (about 2 months free), setup = one time */
   starter:  { month: 1200, year: 12000, setup: 5000 },
   business: { month: 3000, year: 30000, setup: 15000 },
@@ -98,6 +116,9 @@ var T = {
   plans:[["Starter","Shops and small traders","starter",["Sales, purchases, stock, expenses","Reports and VAT","Amharic and English","E-invoice ready"]],
          ["Business","Small and medium businesses","business",["Everything in Starter","Payroll, attendance and leave","Requests, approvals, goals","Procurement and logistics"]],
          ["Organization","NGOs, manufacturers, government","org",["Everything in Business","Grants, projects and budgets","Production and many stores","Audit trail and priority support"]]],
+  choose:"Choose this plan", r_plan:"Plan", r_name:"Your name", r_biz:"Business name", r_phone:"Phone number",
+  r_need:"Please write your name and phone number so we can call you.", r_send_wa:"Send on WhatsApp", r_send_tg:"Send on Telegram", r_send_em:"Send by email", r_send_form:"Continue",
+  r_none:"Our contact details are coming soon. Please check back.", r_msg:"Hello, I am interested in the %plan% plan of Zewderp.",
   best:"Most popular", per:"/ month", yr:"or %s / year", setup:"One-time setup: %s", users:"Unlimited users and your own roles", from:"from ",
   p_note:"Pilot offer: the first 5 customers get 50% off for 12 months and the e-invoice connection at no extra cost, in return for honest feedback. Setup includes loading your products, customers and opening balances, and one day of staff training.",
   c_h:"Let's talk", c_lead:"Tell us about your business and we will set up a free demo with your own products.", c_empty:"Contact details coming soon.",
@@ -121,11 +142,14 @@ var T = {
   plans:[["ጀማሪ","ሱቆችና አነስተኛ ነጋዴዎች","starter",["ሽያጭ፣ ግዢ፣ ክምችት፣ ወጪ","ሪፖርቶችና ተ.እ.ታ.","አማርኛና እንግሊዝኛ","ለኢ-ደረሰኝ ዝግጁ"]],
          ["ንግድ","አነስተኛና መካከለኛ ንግዶች","business",["ሁሉም የጀማሪ","ደመወዝ፣ ክትትልና ፈቃድ","ጥያቄዎች፣ ማጽደቂያዎች፣ ግቦች","ግዢና ሎጂስቲክስ"]],
          ["ተቋም","መንግሥታዊ ያልሆኑ ድርጅቶች፣ አምራቾች፣ መንግሥት","org",["ሁሉም የንግድ","ድጋፍ፣ ፕሮጀክቶችና በጀቶች","ምርትና በርካታ መጋዘኖች","የኦዲት ዱካና ቅድሚያ ድጋፍ"]]],
+  choose:"ይህን እቅድ ይምረጡ", r_plan:"እቅድ", r_name:"ስምዎ", r_biz:"የንግድ ስም", r_phone:"ስልክ ቁጥር",
+  r_need:"እንድንደውልልዎ እባክዎ ስምዎንና ስልክ ቁጥርዎን ይጻፉ።", r_send_wa:"በዋትስአፕ ላክ", r_send_tg:"በቴሌግራም ላክ", r_send_em:"በኢሜል ላክ", r_send_form:"ቀጥል",
+  r_none:"የመገናኛ መረጃችን በቅርቡ ይቀርባል። እባክዎ ቆይተው ይመለሱ።", r_msg:"ሰላም፣ የዘውድ ኤርፒ %plan% እቅድ ፍላጎት አለኝ።",
   best:"በጣም ተመራጭ", per:"/ በወር", yr:"ወይም %s / በዓመት", setup:"የአንድ ጊዜ ማስጀመሪያ፡ %s", users:"ያልተገደበ ተጠቃሚዎችና የራስዎ ሚናዎች", from:"ከ ",
   p_note:"የሙከራ ቅናሽ፡ የመጀመሪያዎቹ 5 ደንበኞች ለ12 ወር 50% ቅናሽና የኢ-ደረሰኝ ግንኙነት ያለ ተጨማሪ ክፍያ ያገኛሉ፤ በምላሹ ሐቀኛ አስተያየት። ማስጀመሪያው ምርቶችን፣ ደንበኞችንና የመክፈቻ ሂሳቦችን መጫንና የአንድ ቀን የሰራተኞች ሥልጠናን ያካትታል።",
   c_h:"እንነጋገር", c_lead:"ስለ ንግድዎ ይንገሩን፤ በራስዎ ምርቶች ነጻ ማሳያ እናዘጋጃለን።", c_empty:"የመገናኛ መረጃ በቅርቡ ይቀርባል።",
   foot:"በኢትዮጵያ፣ ለኢትዮጵያ ንግዶች የተሠራ።" } };
-var lang = "en";
+var lang = "en", chosen = "";
 try { lang = localStorage.getItem("zewd_lang") || ((navigator.language || "").slice(0,2) === "am" ? "am" : "en"); } catch (e) {}
 function fmt(n) { return Number(n).toLocaleString("en-US"); }
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
@@ -136,10 +160,14 @@ function render() {
   document.getElementById("einvlist").innerHTML = t.einv.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
   document.getElementById("plans").innerHTML = t.plans.map(function (p, i) {
     var pr = PRICES[p[2]], from = p[2] === "org" ? t.from : "";
-    return '<div class="card plan' + (i === 1 ? " best" : "") + '">' + (i === 1 ? '<span class="tag">' + esc(t.best) + '</span>' : "") +
+    return '<div class="card plan' + (i === 1 ? " best" : "") + (chosen === p[2] ? " chosen" : "") + '" data-plan="' + p[2] + '" tabindex="0" role="button" aria-label="' + esc(t.choose + ": " + p[0]) + '">' + (i === 1 ? '<span class="tag">' + esc(t.best) + '</span>' : "") +
       '<h3>' + esc(p[0]) + '</h3><p>' + esc(p[1]) + '</p><div class="price">' + from + fmt(pr.month) + ' <small>ETB ' + esc(t.per) + '</small></div>' +
       '<p>' + esc(t.yr.replace("%s", "ETB " + fmt(pr.year))) + '</p><ul>' + p[3].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' +
-      '<p>' + esc(t.users) + '</p><p>' + esc(t.setup.replace("%s", "ETB " + fmt(pr.setup))) + '</p></div>'; }).join("");
+      '<p>' + esc(t.users) + '</p><p>' + esc(t.setup.replace("%s", "ETB " + fmt(pr.setup))) + '</p><button type="button" class="btn solid pick" tabindex="-1">' + esc(t.choose) + '</button></div>'; }).join("");
+  var sel = document.getElementById("r_plan");
+  sel.innerHTML = t.plans.map(function (p) { return '<option value="' + p[2] + '"' + (chosen === p[2] ? " selected" : "") + '>' + esc(p[0]) + '</option>'; }).join("");
+  if (chosen) sel.value = chosen;
+  renderSend();
   var c = [];
   if (CONFIG.phone) c.push('<p><a href="tel:' + esc(CONFIG.phone.replace(/\s/g, "")) + '">' + esc(CONFIG.phone) + '</a></p>');
   if (CONFIG.email) c.push('<p><a href="mailto:' + esc(CONFIG.email) + '">' + esc(CONFIG.email) + '</a></p>');
@@ -148,6 +176,44 @@ function render() {
   document.getElementById("contacts").innerHTML = c.length ? c.join("") : '<p class="muted">' + esc(t.c_empty) + '</p>';
 }
 document.getElementById("lang").addEventListener("click", function () { lang = lang === "en" ? "am" : "en"; try { localStorage.setItem("zewd_lang", lang); } catch (e) {} render(); });
+function planName() { var o = document.getElementById("r_plan"); return o.options[o.selectedIndex] ? o.options[o.selectedIndex].textContent : ""; }
+function message() {
+  var t = T[lang], f = function (id) { return document.getElementById(id).value.trim(); };
+  var lines = [t.r_msg.replace("%plan%", planName())];
+  if (f("r_name")) lines.push(t.r_name + ": " + f("r_name"));
+  if (f("r_biz")) lines.push(t.r_biz + ": " + f("r_biz"));
+  if (f("r_phone")) lines.push(t.r_phone + ": " + f("r_phone"));
+  return lines.join("\n");
+}
+function renderSend() {
+  var t = T[lang], box = document.getElementById("r_send"), b = [];
+  if (CONFIG.formUrl) b.push(["form", t.r_send_form]);
+  if (CONFIG.whatsapp) b.push(["wa", t.r_send_wa]);
+  if (CONFIG.telegram) b.push(["tg", t.r_send_tg]);
+  if (CONFIG.email) b.push(["em", t.r_send_em]);
+  box.innerHTML = b.length ? b.map(function (x) { return '<button type="button" class="btn solid" data-send="' + x[0] + '">' + esc(x[1]) + '</button>'; }).join("")
+    : '<p class="muted">' + esc(t.r_none) + '</p>';
+}
+function send(kind) {
+  var t = T[lang], err = document.getElementById("r_err"), v = function (id) { return document.getElementById(id).value.trim(); };
+  if (!v("r_name") || !v("r_phone")) { err.textContent = t.r_need; return; }
+  err.textContent = "";
+  var m = message(), plan = document.getElementById("r_plan").value, url = "", q = encodeURIComponent;
+  if (kind === "form") url = CONFIG.formUrl + (CONFIG.formUrl.indexOf("?") < 0 ? "?" : "&") + "plan=" + q(plan) + "&name=" + q(v("r_name")) + "&phone=" + q(v("r_phone")) + "&business=" + q(v("r_biz"));
+  if (kind === "wa") url = "https://wa.me/" + CONFIG.whatsapp.replace(/[^0-9]/g, "") + "?text=" + q(m);
+  if (kind === "tg") url = "https://t.me/" + CONFIG.telegram.replace("@", "") + "?text=" + q(m);
+  if (kind === "em") url = "mailto:" + CONFIG.email + "?subject=" + q("Zewderp - " + planName()) + "&body=" + q(m);
+  window.open(url, kind === "em" ? "_self" : "_blank");
+}
+function choose(plan) {
+  chosen = plan; render();
+  document.getElementById("req").scrollIntoView({ behavior: "smooth", block: "center" });
+  setTimeout(function () { document.getElementById("r_name").focus({ preventScroll: true }); }, 400);
+}
+document.getElementById("plans").addEventListener("click", function (e) { var c = e.target.closest(".plan"); if (c) choose(c.getAttribute("data-plan")); });
+document.getElementById("plans").addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("plan")) { e.preventDefault(); choose(e.target.getAttribute("data-plan")); } });
+document.getElementById("r_send").addEventListener("click", function (e) { var b = e.target.closest("[data-send]"); if (b) send(b.getAttribute("data-send")); });
+document.getElementById("r_plan").addEventListener("change", function () { chosen = this.value; document.querySelectorAll(".plan").forEach(function (c) { c.classList.toggle("chosen", c.getAttribute("data-plan") === chosen); }); });
 document.getElementById("yr").textContent = new Date().getFullYear();
 render();
 </script>
