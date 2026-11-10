@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zewderp - ERP for Ethiopian businesses</title>
+<meta name="description" content="Sales, stock, accounting, payroll and e-invoice readiness in Amharic and English, with the Ethiopian calendar. Works offline.">
+<style>
+  :root { --bg:#f6f8f4; --surface:#fff; --text:#17231d; --muted:#55645b; --green:#14532d; --green2:#1d6b3b; --gold:#c8a23a; --line:#dbe1da; --soft:#eaf2ea; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#0f1713; --surface:#16211b; --text:#e9efe9; --muted:#9db0a4; --green:#7ccf9a; --green2:#4fae74; --line:#2a3a30; --soft:#1b2a21; } }
+  * { box-sizing:border-box; } html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 system-ui,"Noto Sans Ethiopic","Nyala",sans-serif; }
+  a { color:var(--green2); } .wrap { max-width:1060px; margin:0 auto; padding:0 16px; }
+  header { position:sticky; top:0; background:var(--surface); border-bottom:1px solid var(--line); z-index:5; }
+  header .wrap { display:flex; align-items:center; gap:14px; min-height:56px; flex-wrap:wrap; }
+  .logo { font-weight:800; font-size:1.2rem; color:var(--text); text-decoration:none; } .logo span { color:var(--gold); }
+  nav { margin-left:auto; display:flex; gap:14px; align-items:center; flex-wrap:wrap; } nav a { text-decoration:none; color:var(--text); font-size:.95rem; }
+  .lang { border:1px solid var(--line); background:none; color:var(--text); border-radius:8px; padding:6px 10px; cursor:pointer; font:inherit; }
+  .hero { background:linear-gradient(135deg,#14532d,#1d6b3b); color:#fff; padding:56px 0 48px; }
+  .hero h1 { font-size:clamp(1.8rem,5vw,2.8rem); line-height:1.15; margin:0 0 12px; max-width:20ch; } .hero p { max-width:56ch; font-size:1.1rem; opacity:.95; }
+  .btn { display:inline-block; background:var(--gold); color:#1b1b12; padding:12px 20px; border-radius:10px; font-weight:700; text-decoration:none; border:0; cursor:pointer; font:inherit; font-weight:700; }
+  .btn.ghost { background:transparent; color:#fff; border:1px solid rgba(255,255,255,.6); margin-left:8px; }
+  section { padding:44px 0; } h2 { font-size:1.6rem; margin:0 0 8px; } .lead { color:var(--muted); margin:0 0 22px; max-width:62ch; }
+  .grid { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px; } .card h3 { margin:0 0 6px; font-size:1.05rem; }
+  .card p { margin:0; color:var(--muted); font-size:.95rem; }
+  .price { font-size:1.9rem; font-weight:800; margin:6px 0 0; } .price small { font-size:.9rem; font-weight:400; color:var(--muted); }
+  .plan ul { padding-left:18px; margin:12px 0; color:var(--muted); font-size:.95rem; } .plan.best { border:2px solid var(--green2); }
+  .tag { display:inline-block; background:var(--soft); color:var(--green); border-radius:99px; padding:2px 10px; font-size:.8rem; font-weight:700; }
+  .note { background:var(--soft); border-radius:12px; padding:14px 16px; color:var(--text); }
+  footer { border-top:1px solid var(--line); padding:24px 0; color:var(--muted); font-size:.9rem; }
+  [data-am] { } .hide { display:none !important; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="#top"><span>&#9813;</span> Zewderp</a>
+  <nav><a href="#features" data-t="nav_features"></a><a href="#einvoice" data-t="nav_einv"></a><a href="#pricing" data-t="nav_pricing"></a><a href="#contact" data-t="nav_contact"></a>
+    <button class="lang" id="lang" type="button" aria-label="Language">አማርኛ</button></nav>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap">
+  <h1 data-t="h1"></h1><p data-t="sub"></p>
+  <p><a class="btn" href="#contact" data-t="cta"></a><a class="btn ghost" href="#pricing" data-t="cta2"></a></p>
+</div></div>
+
+<section id="features"><div class="wrap">
+  <h2 data-t="f_h"></h2><p class="lead" data-t="f_lead"></p>
+  <div class="grid" id="featgrid"></div>
+</div></section>
+
+<section id="einvoice" style="background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
+  <h2 data-t="e_h"></h2><p class="lead" data-t="e_lead"></p>
+  <ul id="einvlist" style="color:var(--muted);padding-left:20px;margin:0 0 14px"></ul>
+  <div class="note" data-t="e_note"></div>
+</div></section>
+
+<section id="pricing"><div class="wrap">
+  <h2 data-t="p_h"></h2><p class="lead" data-t="p_lead"></p>
+  <div class="grid" id="plans"></div>
+  <p class="note" style="margin-top:16px" data-t="p_note"></p>
+</div></section>
+
+<section id="contact"><div class="wrap">
+  <h2 data-t="c_h"></h2><p class="lead" data-t="c_lead"></p>
+  <div id="contacts"></div>
+</div></section>
+</main>
+<footer><div class="wrap"><span data-t="foot"></span> &copy; <span id="yr"></span> Zewderp</div></footer>
+
+<script>
+/* EDIT HERE: your contact details and prices. Empty contact lines are hidden. */
+var CONFIG = { phone: "", email: "", telegram: "", address: "" };
+var PRICES = {  /* ETB. month = per month, year = per year (about 2 months free), setup = one time */
+  starter:  { month: 1200, year: 12000, setup: 5000 },
+  business: { month: 3000, year: 30000, setup: 15000 },
+  org:      { month: 7500, year: 75000, setup: 40000 }
+};
+var T = {
+ en: { nav_features:"Features", nav_einv:"E-invoice", nav_pricing:"Pricing", nav_contact:"Contact",
+  h1:"The ERP built for Ethiopian businesses", sub:"Sales, stock, accounting, payroll, procurement and reports in Amharic and English. Ethiopian calendar, Ethiopian tax rules, works when the internet does not.",
+  cta:"Book a free demo", cta2:"See pricing",
+  f_h:"Everything a growing business needs", f_lead:"Start with what you need today. Switch on more modules as you grow.",
+  feats:[["Sales and invoices","Quotations, invoices, credit notes, delivery notes, VAT and withholding. Printed with your own company details."],
+         ["Stock and purchases","Products, barcodes, several stores, purchase orders, supplier payments and stock counts."],
+         ["Accounting","Double-entry books posted for you. Trial balance, profit and loss, balance sheet, VAT return, month closing."],
+         ["Payroll and people","Ethiopian income tax and pension, attendance and leave that feed payroll, payslips, performance goals."],
+         ["Requests and approvals","Staff request payments, advances, travel, supplies and vehicles. Supervisor, finance check, cashier pays."],
+         ["Procurement and logistics","Purchase requests, quotations and awards by your own rules. Vehicles, fuel, trips and store transfers."],
+         ["Amharic and Ethiopian calendar","Switch language and dates in one click. Every screen and printout."],
+         ["Works offline","Keep selling when the connection drops. It catches up when the internet returns."]],
+  e_h:"Ready for the e-invoice system", e_lead:"Ethiopia's Ministry of Revenue is introducing registered electronic invoices (Directive No. 1142/2026). Zewderp prepares for it now.",
+  einv:["Every invoice, credit note and cancellation is kept ready in a queue, with your TIN and the buyer details.","Space for the registration number (IRN) and QR code on the printed invoice.","Reprints are marked DUPLICATE once the original is printed.","A checklist shows what you still need: portal details and the INSA digital certificate.","A warning when a document waits longer than the 72 hours the directive allows."],
+  e_note:"The live connection is switched on as soon as the Ministry publishes its technical details and approves the software. Until then your invoices are ready and nothing is lost.",
+  p_h:"Simple pricing in birr", p_lead:"One price per business, not per feature. Prices are pilot prices for our first customers.",
+  plans:[["Starter","Shops and small traders","starter",["Sales, purchases, stock, expenses","Reports and VAT","Amharic and English","E-invoice ready"]],
+         ["Business","Small and medium businesses","business",["Everything in Starter","Payroll, attendance and leave","Requests, approvals, goals","Procurement and logistics"]],
+         ["Organization","NGOs, manufacturers, government","org",["Everything in Business","Grants, projects and budgets","Production and many stores","Audit trail and priority support"]]],
+  best:"Most popular", per:"/ month", yr:"or %s / year", setup:"One-time setup: %s", users:"Unlimited users and your own roles", from:"from ",
+  p_note:"Pilot offer: the first 5 customers get 50% off for 12 months and the e-invoice connection at no extra cost, in return for honest feedback. Setup includes loading your products, customers and opening balances, and one day of staff training.",
+  c_h:"Let's talk", c_lead:"Tell us about your business and we will set up a free demo with your own products.", c_empty:"Contact details coming soon.",
+  foot:"Made in Ethiopia, for Ethiopian businesses." },
+ am: { nav_features:"ባህሪያት", nav_einv:"ኢ-ደረሰኝ", nav_pricing:"ዋጋ", nav_contact:"ያግኙን",
+  h1:"ለኢትዮጵያ ንግዶች የተሠራ የሥራ አመራር ሲስተም", sub:"ሽያጭ፣ ክምችት፣ ሂሳብ አያያዝ፣ ደመወዝ፣ ግዢና ሪፖርቶች በአማርኛና በእንግሊዝኛ። የኢትዮጵያ ቀን መቁጠሪያ፣ የታክስ ደንቦች፣ ኢንተርኔት ሲቋረጥም ይሠራል።",
+  cta:"ነጻ ማሳያ ይያዙ", cta2:"ዋጋ ይመልከቱ",
+  f_h:"ሚያድግ ንግድ የሚፈልገው ሁሉ", f_lead:"ዛሬ በሚያስፈልግዎ ይጀምሩ። ሲያድጉ ተጨማሪ ክፍሎችን ያብሩ።",
+  feats:[["ሽያጭና ደረሰኞች","ዋጋ ጥቅሶች፣ ደረሰኞች፣ የክሬዲት ማስታወሻዎች፣ የማስረከቢያ ሰነዶች፣ ተ.እ.ታ. እና ተቀናሽ ግብር። በድርጅትዎ ዝርዝር ታትሞ ይወጣል።"],
+         ["ክምችትና ግዢ","ምርቶች፣ ባርኮድ፣ በርካታ መጋዘኖች፣ የግዢ ትዕዛዞች፣ የአቅራቢ ክፍያዎችና የክምችት ቆጠራ።"],
+         ["ሂሳብ አያያዝ","ድርብ ሂሳብ በራስ ይመዘገባል። የሙከራ ሚዛን፣ የትርፍና ኪሳራ፣ ሚዛን ሉህ፣ የተ.እ.ታ. ተመላሽ፣ የወር መዝጊያ።"],
+         ["ደመወዝና ሰራተኞች","የኢትዮጵያ የገቢ ግብርና ጡረታ፣ ደመወዝን የሚመግቡ ክትትልና ፈቃድ፣ የደመወዝ ወረቀቶች፣ የአፈጻጸም ግቦች።"],
+         ["ጥያቄዎችና ማጽደቂያዎች","ሰራተኞች ክፍያ፣ ቅድሚያ ክፍያ፣ ጉዞ፣ አቅርቦትና ተሽከርካሪ ይጠይቃሉ። ተቆጣጣሪ፣ ፋይናንስ ምርመራ፣ ገንዘብ ያዥ ይከፍላል።"],
+         ["ግዢና ሎጂስቲክስ","የግዢ ጥያቄዎች፣ ዋጋ ጥቅሶችና ሽልማት በራስዎ ደንብ። ተሽከርካሪዎች፣ ነዳጅ፣ ጉዞዎችና የመጋዘን ዝውውር።"],
+         ["አማርኛና የኢትዮጵያ ቀን መቁጠሪያ","ቋንቋና ቀን በአንድ ጠቅታ ይቀይሩ። በእያንዳንዱ ገጽና ህትመት።"],
+         ["ያለ ኢንተርኔት ይሠራል","ግንኙነት ቢቋረጥም መሸጥ ይቀጥሉ። ኢንተርኔት ሲመለስ ይደርሳል።"]],
+  e_h:"ለኢ-ደረሰኝ ሲስተም ዝግጁ", e_lead:"የገቢዎች ሚኒስቴር የተመዘገቡ ኤሌክትሮኒክ ደረሰኞችን እያስተዋወቀ ነው (መመሪያ ቁጥር 1142/2026)። ዘውድ አሁኑኑ ያዘጋጅዎታል።",
+  einv:["እያንዳንዱ ደረሰኝ፣ የክሬዲት ማስታወሻና መሰረዝ ከቲንዎና ከገዢ ዝርዝር ጋር ተዘጋጅቶ በወረፋ ይቆያል።","በታተመው ደረሰኝ ላይ የምዝገባ ቁጥር (IRN) እና ኪውአር ኮድ ቦታ አለ።","ዋናው ከታተመ በኋላ እንደገና ሲታተም «ግልባጭ» ተብሎ ይመለክታል።","የሚቀርዎትን ዝርዝር ያሳያል፤ የፖርታል መረጃና የኢንሳ ዲጂታል ሰርተፊኬት።","ሰነድ መመሪያው ከፈቀደው 72 ሰዓት በላይ ሲቆይ ማስጠንቀቂያ ይሰጣል።"],
+  e_note:"ሚኒስቴሩ የቴክኒክ ዝርዝሩን አውጥቶ ሶፍትዌሩን እንዳጸደቀ ቀጥተኛ ግንኙነቱ ይበራል። እስከዚያ ደረሰኞችዎ ዝግጁ ናቸው፤ ምንም አይጠፋም።",
+  p_h:"ቀላል ዋጋ በብር", p_lead:"ለአንድ ንግድ አንድ ዋጋ እንጂ በባህሪ አይደለም። ዋጋዎቹ ለመጀመሪያ ደንበኞቻችን የሙከራ ዋጋዎች ናቸው።",
+  plans:[["ጀማሪ","ሱቆችና አነስተኛ ነጋዴዎች","starter",["ሽያጭ፣ ግዢ፣ ክምችት፣ ወጪ","ሪፖርቶችና ተ.እ.ታ.","አማርኛና እንግሊዝኛ","ለኢ-ደረሰኝ ዝግጁ"]],
+         ["ንግድ","አነስተኛና መካከለኛ ንግዶች","business",["ሁሉም የጀማሪ","ደመወዝ፣ ክትትልና ፈቃድ","ጥያቄዎች፣ ማጽደቂያዎች፣ ግቦች","ግዢና ሎጂስቲክስ"]],
+         ["ተቋም","መንግሥታዊ ያልሆኑ ድርጅቶች፣ አምራቾች፣ መንግሥት","org",["ሁሉም የንግድ","ድጋፍ፣ ፕሮጀክቶችና በጀቶች","ምርትና በርካታ መጋዘኖች","የኦዲት ዱካና ቅድሚያ ድጋፍ"]]],
+  best:"በጣም ተመራጭ", per:"/ በወር", yr:"ወይም %s / በዓመት", setup:"የአንድ ጊዜ ማስጀመሪያ፡ %s", users:"ያልተገደበ ተጠቃሚዎችና የራስዎ ሚናዎች", from:"ከ ",
+  p_note:"የሙከራ ቅናሽ፡ የመጀመሪያዎቹ 5 ደንበኞች ለ12 ወር 50% ቅናሽና የኢ-ደረሰኝ ግንኙነት ያለ ተጨማሪ ክፍያ ያገኛሉ፤ በምላሹ ሐቀኛ አስተያየት። ማስጀመሪያው ምርቶችን፣ ደንበኞችንና የመክፈቻ ሂሳቦችን መጫንና የአንድ ቀን የሰራተኞች ሥልጠናን ያካትታል።",
+  c_h:"እንነጋገር", c_lead:"ስለ ንግድዎ ይንገሩን፤ በራስዎ ምርቶች ነጻ ማሳያ እናዘጋጃለን።", c_empty:"የመገናኛ መረጃ በቅርቡ ይቀርባል።",
+  foot:"በኢትዮጵያ፣ ለኢትዮጵያ ንግዶች የተሠራ።" } };
+var lang = "en";
+try { lang = localStorage.getItem("zewd_lang") || ((navigator.language || "").slice(0,2) === "am" ? "am" : "en"); } catch (e) {}
+function fmt(n) { return Number(n).toLocaleString("en-US"); }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function render() {
+  var t = T[lang]; document.documentElement.lang = lang; document.getElementById("lang").textContent = lang === "en" ? "አማርኛ" : "English";
+  document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = t[el.getAttribute("data-t")]; });
+  document.getElementById("featgrid").innerHTML = t.feats.map(function (f) { return '<div class="card"><h3>' + esc(f[0]) + '</h3><p>' + esc(f[1]) + '</p></div>'; }).join("");
+  document.getElementById("einvlist").innerHTML = t.einv.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
+  document.getElementById("plans").innerHTML = t.plans.map(function (p, i) {
+    var pr = PRICES[p[2]], from = p[2] === "org" ? t.from : "";
+    return '<div class="card plan' + (i === 1 ? " best" : "") + '">' + (i === 1 ? '<span class="tag">' + esc(t.best) + '</span>' : "") +
+      '<h3>' + esc(p[0]) + '</h3><p>' + esc(p[1]) + '</p><div class="price">' + from + fmt(pr.month) + ' <small>ETB ' + esc(t.per) + '</small></div>' +
+      '<p>' + esc(t.yr.replace("%s", "ETB " + fmt(pr.year))) + '</p><ul>' + p[3].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' +
+      '<p>' + esc(t.users) + '</p><p>' + esc(t.setup.replace("%s", "ETB " + fmt(pr.setup))) + '</p></div>'; }).join("");
+  var c = [];
+  if (CONFIG.phone) c.push('<p><a href="tel:' + esc(CONFIG.phone.replace(/\s/g, "")) + '">' + esc(CONFIG.phone) + '</a></p>');
+  if (CONFIG.email) c.push('<p><a href="mailto:' + esc(CONFIG.email) + '">' + esc(CONFIG.email) + '</a></p>');
+  if (CONFIG.telegram) c.push('<p>Telegram: <a href="https://t.me/' + esc(CONFIG.telegram.replace("@", "")) + '">' + esc(CONFIG.telegram) + '</a></p>');
+  if (CONFIG.address) c.push('<p>' + esc(CONFIG.address) + '</p>');
+  document.getElementById("contacts").innerHTML = c.length ? c.join("") : '<p class="muted">' + esc(t.c_empty) + '</p>';
+}
+document.getElementById("lang").addEventListener("click", function () { lang = lang === "en" ? "am" : "en"; try { localStorage.setItem("zewd_lang", lang); } catch (e) {} render(); });
+document.getElementById("yr").textContent = new Date().getFullYear();
+render();
+</script>
+</body>
+</html>
