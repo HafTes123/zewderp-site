@@ -4,178 +4,387 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zewderp - ERP for Ethiopian businesses</title>
-<meta name="description" content="Sales, stock, accounting, payroll and e-invoice readiness in Amharic and English, with the Ethiopian calendar. Works offline.">
+<meta name="description" content="Sales, stock, accounting, payroll, procurement and e-invoice readiness in Amharic, Tigrinya, Afaan Oromoo and English. Ethiopian calendar. Works offline.">
+<meta name="theme-color" content="#0f4a2a">
 <style>
-  :root { --bg:#f6f8f4; --surface:#fff; --text:#17231d; --muted:#55645b; --green:#14532d; --green2:#1d6b3b; --gold:#c8a23a; --line:#dbe1da; --soft:#eaf2ea; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#0f1713; --surface:#16211b; --text:#e9efe9; --muted:#9db0a4; --green:#7ccf9a; --green2:#4fae74; --line:#2a3a30; --soft:#1b2a21; } }
-  * { box-sizing:border-box; } html { scroll-behavior:smooth; }
-  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 system-ui,"Noto Sans Ethiopic","Nyala",sans-serif; }
-  a { color:var(--green2); } .wrap { max-width:1060px; margin:0 auto; padding:0 16px; }
-  header { position:sticky; top:0; background:var(--surface); border-bottom:1px solid var(--line); z-index:5; }
-  header .wrap { display:flex; align-items:center; gap:14px; min-height:56px; flex-wrap:wrap; }
-  .logo { font-weight:800; font-size:1.2rem; color:var(--text); text-decoration:none; } .logo span { color:var(--gold); }
-  nav { margin-left:auto; display:flex; gap:14px; align-items:center; flex-wrap:wrap; } nav a { text-decoration:none; color:var(--text); font-size:.95rem; }
-  .lang { border:1px solid var(--line); background:none; color:var(--text); border-radius:8px; padding:6px 10px; cursor:pointer; font:inherit; }
-  .hero { background:linear-gradient(135deg,#14532d,#1d6b3b); color:#fff; padding:56px 0 48px; }
-  .hero h1 { font-size:clamp(1.8rem,5vw,2.8rem); line-height:1.15; margin:0 0 12px; max-width:20ch; } .hero p { max-width:56ch; font-size:1.1rem; opacity:.95; }
-  .btn { display:inline-block; background:var(--gold); color:#1b1b12; padding:12px 20px; border-radius:10px; font-weight:700; text-decoration:none; border:0; cursor:pointer; font:inherit; font-weight:700; }
-  .btn.ghost { background:transparent; color:#fff; border:1px solid rgba(255,255,255,.6); margin-left:8px; }
-  section { padding:44px 0; } h2 { font-size:1.6rem; margin:0 0 8px; } .lead { color:var(--muted); margin:0 0 22px; max-width:62ch; }
-  .grid { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
-  .card { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px; } .card h3 { margin:0 0 6px; font-size:1.05rem; }
-  .card p { margin:0; color:var(--muted); font-size:.95rem; }
-  .price { font-size:1.9rem; font-weight:800; margin:6px 0 0; } .price small { font-size:.9rem; font-weight:400; color:var(--muted); }
-  .plan ul { padding-left:18px; margin:12px 0; color:var(--muted); font-size:.95rem; } .plan.best { border:2px solid var(--green2); }
-  .tag { display:inline-block; background:var(--soft); color:var(--green); border-radius:99px; padding:2px 10px; font-size:.8rem; font-weight:700; }
-  .note { background:var(--soft); border-radius:12px; padding:14px 16px; color:var(--text); }
-  .plan { cursor:pointer; transition:border-color .15s, box-shadow .15s; display:flex; flex-direction:column; }
-  .plan:hover, .plan:focus-visible { border-color:var(--green2); box-shadow:0 4px 16px rgba(0,0,0,.08); outline:none; }
-  .plan.chosen { border:2px solid var(--green2); background:var(--soft); }
-  .plan .pick { margin-top:auto; width:100%; }
-  .btn.solid { background:var(--green2); color:#fff; } .btn.solid:hover { background:var(--green); }
-  .req { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px; max-width:560px; }
-  .req label { display:block; font-weight:600; margin:10px 0 4px; font-size:.95rem; }
-  .req input, .req select { width:100%; padding:10px; border:1px solid var(--line); border-radius:8px; font:inherit; background:var(--bg); color:var(--text); }
-  .req .send { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; } .req .err { color:#b00020; margin:8px 0 0; font-size:.9rem; }
-  footer { border-top:1px solid var(--line); padding:24px 0; color:var(--muted); font-size:.9rem; }
-  [data-am] { } .hide { display:none !important; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+  :root {
+    --bg:#f7f8f3; --surface:#ffffff; --surface2:#f0f4ee; --text:#14201a; --muted:#51625a; --line:#dde4da;
+    --green:#0f4a2a; --green2:#1b7a43; --green3:#e3f1e7; --gold:#d6a82c; --gold2:#fff3cf; --red:#c0392b;
+    --shadow:0 10px 30px rgba(15,74,42,.10); --radius:16px;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg:#0e1612; --surface:#15211a; --surface2:#1a2a20; --text:#e8efe9; --muted:#9bb0a3; --line:#27382d;
+    --green:#7fd29c; --green2:#4fb477; --green3:#173325; --gold2:#2f2a14; --shadow:0 10px 30px rgba(0,0,0,.35); } }
+  * { box-sizing:border-box; } html { scroll-behavior:smooth; scroll-padding-top:70px; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.65 system-ui,-apple-system,"Segoe UI","Noto Sans Ethiopic","Nyala",sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:var(--green2); } img,svg { max-width:100%; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 20px; }
+  .flag { height:5px; background:linear-gradient(90deg,#078930 0 33.3%,#fcdd09 33.3% 66.6%,#da121a 66.6%); }
+
+  /* header */
+  header { position:sticky; top:0; z-index:20; background:color-mix(in srgb,var(--surface) 90%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  header .wrap { display:flex; align-items:center; gap:18px; min-height:62px; }
+  .logo { display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.25rem; color:var(--text); text-decoration:none; letter-spacing:-.02em; }
+  .logo i { width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg,var(--green),var(--green2)); display:grid; place-items:center; color:#fff; font-style:normal; font-size:1.1rem; }
+  nav { margin-left:auto; display:flex; gap:6px; align-items:center; }
+  nav a.l { text-decoration:none; color:var(--text); font-size:.95rem; padding:8px 12px; border-radius:10px; } nav a.l:hover { background:var(--surface2); }
+  select.lang { border:1px solid var(--line); background:var(--surface); color:var(--text); border-radius:10px; padding:8px 10px; font:inherit; font-size:.92rem; cursor:pointer; }
+  .menu-btn { display:none; border:1px solid var(--line); background:var(--surface); color:var(--text); border-radius:10px; padding:8px 12px; font:inherit; }
+
+  /* buttons */
+  .btn { display:inline-flex; align-items:center; gap:8px; justify-content:center; background:var(--gold); color:#1d1a0c; padding:13px 22px; border-radius:12px; font-weight:700; text-decoration:none; border:0; cursor:pointer; font:inherit; font-weight:700; transition:transform .12s, box-shadow .12s; }
+  .btn:hover { transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.16); }
+  .btn.solid { background:var(--green2); color:#fff; } .btn.ghost { background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.55); }
+  .btn.wa { background:#25d366; color:#06361a; } .btn.line { background:var(--surface); color:var(--text); border:1.5px solid var(--line); }
+  .btn:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible, .plan:focus-visible { outline:3px solid var(--gold); outline-offset:2px; }
+
+  /* hero */
+  .hero { position:relative; overflow:hidden; color:#fff; background:radial-gradient(1200px 500px at 85% -10%,#2a9a5a55,transparent),linear-gradient(135deg,#0b3a21,#126a38 70%,#1b7a43); }
+  .hero::after { content:""; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0 60 30 30 60 0 30z' fill='none' stroke='%23ffffff' stroke-opacity='.06'/%3E%3C/svg%3E"); pointer-events:none; }
+  .hero .wrap { position:relative; z-index:1; display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center; padding-top:64px; padding-bottom:70px; }
+  .badge { display:inline-block; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); padding:6px 14px; border-radius:99px; font-size:.88rem; margin-bottom:16px; }
+  .hero h1 { font-size:clamp(2rem,4.6vw,3.2rem); line-height:1.12; margin:0 0 16px; letter-spacing:-.025em; }
+  .hero p.sub { font-size:1.12rem; opacity:.95; max-width:54ch; margin:0 0 26px; }
+  .hero .cta { display:flex; gap:12px; flex-wrap:wrap; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:26px; } .chips span { background:rgba(255,255,255,.12); padding:5px 12px; border-radius:99px; font-size:.85rem; }
+
+  /* app mock */
+  .mock { background:var(--surface); color:var(--text); border-radius:18px; box-shadow:0 30px 60px rgba(0,0,0,.35); overflow:hidden; border:1px solid rgba(255,255,255,.2); transform:rotate(1.2deg); }
+  .mock .bar { display:flex; gap:6px; padding:10px 14px; background:var(--surface2); border-bottom:1px solid var(--line); } .mock .bar b { width:10px; height:10px; border-radius:50%; background:#cfd8cf; display:block; }
+  .mock .body { display:grid; grid-template-columns:96px 1fr; min-height:300px; }
+  .mock .side { background:var(--green); padding:12px 10px; display:grid; gap:7px; align-content:start; } .mock .side span { height:9px; border-radius:6px; background:rgba(255,255,255,.28); } .mock .side span.on { background:var(--gold); }
+  .mock .main { padding:16px; display:grid; gap:12px; align-content:start; }
+  .kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; } .kpi { background:var(--surface2); border-radius:10px; padding:9px; } .kpi small { color:var(--muted); font-size:.7rem; display:block; } .kpi b { font-size:1rem; }
+  .bars { display:flex; align-items:flex-end; gap:7px; height:96px; padding:8px; background:var(--surface2); border-radius:10px; } .bars i { flex:1; border-radius:5px 5px 0 0; background:linear-gradient(var(--green2),var(--green)); display:block; }
+  .rows { display:grid; gap:6px; } .rows div { display:flex; justify-content:space-between; font-size:.78rem; padding:7px 9px; background:var(--surface2); border-radius:8px; } .rows em { font-style:normal; color:var(--green2); font-weight:700; }
+
+  /* sections */
+  section { padding:72px 0; } .eyebrow { color:var(--green2); font-weight:700; font-size:.85rem; letter-spacing:.08em; text-transform:uppercase; margin:0 0 6px; }
+  h2 { font-size:clamp(1.6rem,3.2vw,2.3rem); line-height:1.2; margin:0 0 10px; letter-spacing:-.02em; } .lead { color:var(--muted); margin:0 0 34px; max-width:64ch; font-size:1.05rem; }
+  .grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; transition:transform .15s, box-shadow .15s; }
+  .feat:hover { transform:translateY(-3px); box-shadow:var(--shadow); } .card h3 { margin:12px 0 6px; font-size:1.08rem; } .card p { margin:0; color:var(--muted); font-size:.95rem; }
+  .ico { width:46px; height:46px; border-radius:13px; display:grid; place-items:center; background:var(--green3); color:var(--green2); } .ico svg { width:24px; height:24px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .alt { background:var(--surface); border-block:1px solid var(--line); }
+  .steps { counter-reset:s; display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); } .step { position:relative; padding:22px 22px 22px 70px; background:var(--surface2); border-radius:var(--radius); }
+  .step::before { counter-increment:s; content:counter(s); position:absolute; left:20px; top:20px; width:36px; height:36px; border-radius:50%; background:var(--green2); color:#fff; display:grid; place-items:center; font-weight:800; } .step h3 { margin:0 0 4px; font-size:1.05rem; } .step p { margin:0; color:var(--muted); font-size:.95rem; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:36px; align-items:center; }
+  .ticks { list-style:none; padding:0; margin:0; display:grid; gap:10px; } .ticks li { padding-left:30px; position:relative; color:var(--text); } .ticks li::before { content:""; position:absolute; left:0; top:4px; width:20px; height:20px; border-radius:50%; background:var(--green2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-6.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat; }
+  .note { background:var(--gold2); border:1px solid color-mix(in srgb,var(--gold) 55%,transparent); border-radius:12px; padding:14px 16px; margin-top:18px; font-size:.95rem; }
+  .qr { background:var(--surface); border:1px dashed var(--line); border-radius:var(--radius); padding:22px; max-width:340px; margin-inline:auto; box-shadow:var(--shadow); }
+  .qr h4 { margin:0 0 8px; } .qr .ln { height:9px; border-radius:5px; background:var(--surface2); margin:7px 0; } .qr .box { width:84px; height:84px; margin:14px 0 4px auto; background:repeating-conic-gradient(var(--text) 0 25%, transparent 0 50%) 0 0/16px 16px; border-radius:6px; opacity:.85; }
+  .qr .irn { font-size:.75rem; color:var(--muted); }
+
+  /* pricing */
+  .plan { cursor:pointer; display:flex; flex-direction:column; position:relative; transition:transform .15s, box-shadow .15s, border-color .15s; }
+  .plan:hover { transform:translateY(-4px); box-shadow:var(--shadow); border-color:var(--green2); } .plan.chosen { border:2px solid var(--green2); background:var(--green3); }
+  .plan.best { border:2px solid var(--green2); } .tag { position:absolute; top:-12px; left:20px; background:var(--gold); color:#1d1a0c; padding:3px 12px; border-radius:99px; font-size:.78rem; font-weight:800; }
+  .plan h3 { font-size:1.25rem; margin:4px 0 0; } .price { font-size:2.1rem; font-weight:800; margin:10px 0 0; letter-spacing:-.02em; } .price small { font-size:.9rem; font-weight:500; color:var(--muted); }
+  .plan ul { list-style:none; padding:0; margin:14px 0; display:grid; gap:8px; color:var(--text); font-size:.95rem; } .plan li { padding-left:24px; position:relative; } .plan li::before { content:"✓"; position:absolute; left:0; color:var(--green2); font-weight:800; }
+  .plan .meta { color:var(--muted); font-size:.9rem; margin:2px 0; } .plan .pick { margin-top:auto; width:100%; }
+
+  /* contact */
+  .contact { display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:start; }
+  .req { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:var(--shadow); }
+  .req label { display:block; font-weight:600; margin:12px 0 4px; font-size:.92rem; } .req input, .req select { width:100%; padding:11px 12px; border:1px solid var(--line); border-radius:10px; font:inherit; background:var(--bg); color:var(--text); }
+  .req .send { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; } .err { color:var(--red); margin:8px 0 0; font-size:.9rem; min-height:1.2em; }
+  .ways { display:grid; gap:12px; } .way { display:flex; gap:14px; align-items:center; padding:16px; background:var(--surface); border:1px solid var(--line); border-radius:14px; text-decoration:none; color:var(--text); transition:border-color .15s; } .way:hover { border-color:var(--green2); }
+  .way .ico { flex:none; } .way small { color:var(--muted); display:block; font-size:.82rem; } .way b { font-size:1.05rem; }
+  details.faq { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 18px; margin-bottom:10px; } details.faq summary { cursor:pointer; font-weight:700; } details.faq p { margin:10px 0 0; color:var(--muted); }
+  footer { background:#0b3a21; color:#cfe3d4; padding:30px 0; font-size:.92rem; } footer a { color:#fff; }
+  .fab { position:fixed; right:16px; bottom:16px; z-index:30; width:56px; height:56px; border-radius:50%; background:#25d366; display:grid; place-items:center; box-shadow:0 8px 22px rgba(0,0,0,.3); } .fab svg { width:30px; height:30px; fill:#fff; }
+  .reveal { opacity:0; transform:translateY(14px); transition:opacity .5s, transform .5s; } .reveal.in { opacity:1; transform:none; }
+
+  @media (max-width: 860px) {
+    .hero .wrap, .two, .contact { grid-template-columns:1fr; } .mock { transform:none; max-width:460px; }
+    nav a.l { display:none; } nav.open a.l { display:block; } .menu-btn { display:inline-block; margin-left:auto; } nav { margin-left:0; }
+    nav.open { position:absolute; top:62px; left:0; right:0; background:var(--surface); border-bottom:1px solid var(--line); flex-direction:column; align-items:stretch; padding:10px 20px; }
+    section { padding:52px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } .reveal { opacity:1; transform:none; transition:none; } .btn, .card, .plan { transition:none; } .mock { transform:none; } }
 </style>
 </head>
 <body>
+<div class="flag"></div>
 <header><div class="wrap">
-  <a class="logo" href="#top"><span>&#9813;</span> Zewderp</a>
-  <nav><a href="#features" data-t="nav_features"></a><a href="#einvoice" data-t="nav_einv"></a><a href="#pricing" data-t="nav_pricing"></a><a href="#contact" data-t="nav_contact"></a>
-    <button class="lang" id="lang" type="button" aria-label="Language">አማርኛ</button></nav>
+  <a class="logo" href="#top"><i>&#9813;</i> Zewderp</a>
+  <button class="menu-btn" id="menu" type="button" aria-label="Menu" aria-expanded="false">&#9776;</button>
+  <nav id="nav">
+    <a class="l" href="#features" data-t="nav_features"></a><a class="l" href="#how" data-t="nav_how"></a><a class="l" href="#einvoice" data-t="nav_einv"></a><a class="l" href="#pricing" data-t="nav_pricing"></a><a class="l" href="#contact" data-t="nav_contact"></a>
+    <select class="lang" id="lang" aria-label="Language">
+      <option value="en">English</option><option value="am">አማርኛ</option><option value="ti">ትግርኛ</option><option value="om">Afaan Oromoo</option>
+    </select>
+  </nav>
 </div></header>
 
 <main id="top">
 <div class="hero"><div class="wrap">
-  <h1 data-t="h1"></h1><p data-t="sub"></p>
-  <p><a class="btn" href="#contact" data-t="cta"></a><a class="btn ghost" href="#pricing" data-t="cta2"></a></p>
+  <div>
+    <span class="badge" data-t="badge"></span>
+    <h1 data-t="h1"></h1><p class="sub" data-t="sub"></p>
+    <div class="cta"><a class="btn" href="#contact" data-t="cta"></a><a class="btn ghost" href="#pricing" data-t="cta2"></a></div>
+    <div class="chips" id="forchips"></div>
+  </div>
+  <div class="mock" aria-hidden="true">
+    <div class="bar"><b></b><b></b><b></b></div>
+    <div class="body"><div class="side"><span class="on"></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="main"><div class="kpis"><div class="kpi"><small>Sales</small><b>128,400</b></div><div class="kpi"><small>Cash</small><b>74,950</b></div><div class="kpi"><small>VAT</small><b>8,210</b></div></div>
+        <div class="bars"><i style="height:35%"></i><i style="height:55%"></i><i style="height:42%"></i><i style="height:70%"></i><i style="height:60%"></i><i style="height:88%"></i><i style="height:76%"></i></div>
+        <div class="rows"><div>INV-000124 <em>12,500</em></div><div>PAY-000031 <em>4,200</em></div><div>PR-000007 <em>38,000</em></div></div></div></div>
+  </div>
 </div></div>
 
 <section id="features"><div class="wrap">
-  <h2 data-t="f_h"></h2><p class="lead" data-t="f_lead"></p>
+  <p class="eyebrow" data-t="f_eye"></p><h2 data-t="f_h"></h2><p class="lead" data-t="f_lead"></p>
   <div class="grid" id="featgrid"></div>
 </div></section>
 
-<section id="einvoice" style="background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
-  <h2 data-t="e_h"></h2><p class="lead" data-t="e_lead"></p>
-  <ul id="einvlist" style="color:var(--muted);padding-left:20px;margin:0 0 14px"></ul>
-  <div class="note" data-t="e_note"></div>
+<section id="how" class="alt"><div class="wrap">
+  <p class="eyebrow" data-t="how_eye"></p><h2 data-t="how_h"></h2><p class="lead" data-t="how_lead"></p>
+  <div class="steps" id="steps"></div>
 </div></section>
 
-<section id="pricing"><div class="wrap">
-  <h2 data-t="p_h"></h2><p class="lead" data-t="p_lead"></p>
-  <div class="grid" id="plans"></div>
-  <p class="note" style="margin-top:16px" data-t="p_note"></p>
+<section id="einvoice"><div class="wrap two">
+  <div>
+    <p class="eyebrow" data-t="e_eye"></p><h2 data-t="e_h"></h2><p class="lead" style="margin-bottom:18px" data-t="e_lead"></p>
+    <ul class="ticks" id="einvlist"></ul><div class="note" data-t="e_note"></div>
+  </div>
+  <div class="qr" aria-hidden="true"><h4>INV-000124</h4><div class="ln" style="width:80%"></div><div class="ln" style="width:60%"></div><div class="ln" style="width:70%"></div><div class="box"></div><div class="irn">IRN · QR</div></div>
 </div></section>
 
-<section id="contact"><div class="wrap">
-  <h2 data-t="c_h"></h2><p class="lead" data-t="c_lead"></p>
-  <form class="req" id="req" novalidate>
-    <label for="r_plan" data-t="r_plan"></label><select id="r_plan"></select>
-    <label for="r_name" data-t="r_name"></label><input id="r_name" autocomplete="name">
-    <label for="r_biz" data-t="r_biz"></label><input id="r_biz" autocomplete="organization">
-    <label for="r_phone" data-t="r_phone"></label><input id="r_phone" type="tel" autocomplete="tel">
-    <p class="err" id="r_err" role="alert"></p>
-    <div class="send" id="r_send"></div>
-  </form>
-  <div id="contacts" style="margin-top:18px"></div>
+<section id="pricing" class="alt"><div class="wrap">
+  <p class="eyebrow" data-t="p_eye"></p><h2 data-t="p_h"></h2><p class="lead" data-t="p_lead"></p>
+  <div class="grid" id="plans" style="margin-top:14px"></div>
+  <div class="note" data-t="p_note"></div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <p class="eyebrow" data-t="q_eye"></p><h2 data-t="q_h"></h2><div id="faqs" style="max-width:760px"></div>
+</div></section>
+
+<section id="contact" class="alt"><div class="wrap">
+  <p class="eyebrow" data-t="c_eye"></p><h2 data-t="c_h"></h2><p class="lead" data-t="c_lead"></p>
+  <div class="contact">
+    <form class="req" id="req" novalidate>
+      <label for="r_plan" data-t="r_plan"></label><select id="r_plan"></select>
+      <label for="r_name" data-t="r_name"></label><input id="r_name" autocomplete="name">
+      <label for="r_biz" data-t="r_biz"></label><input id="r_biz" autocomplete="organization">
+      <label for="r_phone" data-t="r_phone"></label><input id="r_phone" type="tel" autocomplete="tel">
+      <p class="err" id="r_err" role="alert"></p>
+      <div class="send" id="r_send"></div>
+    </form>
+    <div class="ways" id="contacts"></div>
+  </div>
 </div></section>
 </main>
+
 <footer><div class="wrap"><span data-t="foot"></span> &copy; <span id="yr"></span> Zewderp</div></footer>
+<a class="fab" id="fab" href="#" aria-label="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 32 32"><path d="M16 3C9 3 3.4 8.6 3.4 15.5c0 2.4.7 4.7 1.9 6.600L3.200 29l7.100-2.100c1.800 1 3.800 1.500 5.700 1.500 7 0 12.600-5.600 12.600-12.500S23 3 16 3zm6.400 17.500c-.3.8-1.600 1.500-2.200 1.600-.6.100-1.300.100-2.100-.1-.5-.200-1.100-.4-1.900-.8-3.300-1.400-5.400-4.700-5.600-4.900-.2-.2-1.300-1.700-1.300-3.200s.8-2.300 1.100-2.600c.3-.3.600-.4.800-.4h.6c.2 0 .5-.1.700.5.300.600.900 2.200 1 2.300.1.200.1.400 0 .6-.1.200-.2.400-.4.600l-.5.600c-.2.200-.4.400-.2.800.2.300 1 1.600 2.100 2.600 1.500 1.300 2.700 1.700 3.100 1.900.4.200.6.100.8-.1.2-.3.900-1 1.100-1.400.2-.4.500-.3.800-.2.300.1 2 .9 2.300 1.100.3.200.6.300.7.400.1.200.1.800-.2 1.500z"/></svg></a>
 
 <script>
-/* EDIT HERE: your contact details and prices. Empty contact lines are hidden. */
-var CONFIG = { phone: "Phone Number: +251914348699", email: "Email Adress: haftamu.t@yahoo.com", telegram: "", whatsapp: "", address: "",
-  formUrl: "" /* optional: a Google Form or other page. If set, choosing a plan opens it with ?plan=starter|business|org */ };
+/* EDIT HERE: contact details and prices. Empty contact lines are hidden. */
+var CONFIG = { phone: "+251914348699", whatsapp: "+251914348699", email: "haftamu.t@yahoo.com", telegram: "", address: "",
+  formUrl: "" /* optional: a Google Form or other page. If set, choosing a plan can open it with ?plan=starter|business|org */ };
 var PRICES = {  /* ETB. month = per month, year = per year (about 2 months free), setup = one time */
   starter:  { month: 1200, year: 12000, setup: 5000 },
   business: { month: 3000, year: 30000, setup: 15000 },
   org:      { month: 7500, year: 75000, setup: 40000 }
 };
+var ICONS = {
+  cart:'<circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M3 4h2l2.4 11h11l2-8H6.200"/>',
+  box:'<path d="M3 7.500 12 3l9 4.500v9L12 21l-9-4.500z"/><path d="M3 7.500 12 12l9-4.500M12 12v9"/>',
+  book:'<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>',
+  users:'<circle cx="9" cy="8" r="3.500"/><path d="M2.500 20a6.500 6.500 0 0 1 13 0"/><path d="M16 4.500a3.500 3.500 0 0 1 0 7M18 14a6.500 6.500 0 0 1 3.500 6"/>',
+  check:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/><path d="m15 15 1.500 1.500L19 14"/>',
+  truck:'<path d="M2 6h11v10H2zM13 9h4l3 3v4h-7"/><circle cx="6" cy="18" r="1.800"/><circle cx="16.500" cy="18" r="1.800"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.200"/>',
+  shield:'<path d="M12 3 4 6v6c0 4.500 3.200 7.800 8 9 4.800-1.200 8-4.500 8-9V6z"/><path d="m9 12 2.200 2.200L15.500 10"/>',
+  wifi:'<path d="M2 9a15 15 0 0 1 20 0M5 12.500a10.500 10.500 0 0 1 14 0M8.500 16a5.500 5.500 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/>'
+};
+var ICON_ORDER = ["cart","box","book","users","check","truck","target","shield","wifi"];
+
 var T = {
- en: { nav_features:"Features", nav_einv:"E-invoice", nav_pricing:"Pricing", nav_contact:"Contact",
-  h1:"The ERP built for Ethiopian businesses", sub:"Sales, stock, accounting, payroll, procurement and reports in Amharic and English. Ethiopian calendar, Ethiopian tax rules, works when the internet does not.",
-  cta:"Book a free demo", cta2:"See pricing",
-  f_h:"Everything a growing business needs", f_lead:"Start with what you need today. Switch on more modules as you grow.",
-  feats:[["Sales and invoices","Quotations, invoices, credit notes, delivery notes, VAT and withholding. Printed with your own company details."],
-         ["Stock and purchases","Products, barcodes, several stores, purchase orders, supplier payments and stock counts."],
-         ["Accounting","Double-entry books posted for you. Trial balance, profit and loss, balance sheet, VAT return, month closing."],
-         ["Payroll and people","Ethiopian income tax and pension, attendance and leave that feed payroll, payslips, performance goals."],
-         ["Requests and approvals","Staff request payments, advances, travel, supplies and vehicles. Supervisor, finance check, cashier pays."],
+ en: { nav_features:"Features", nav_how:"How it works", nav_einv:"E-invoice", nav_pricing:"Pricing", nav_contact:"Contact",
+  badge:"Made in Ethiopia · Works offline", h1:"Run your whole business from one simple system",
+  sub:"Sales, stock, accounting, payroll, procurement and reports in Amharic, Tigrinya, Afaan Oromoo and English. Ethiopian calendar, local tax rules and e-invoice ready.",
+  cta:"Book a free demo", cta2:"See pricing", forchips:["Shops and traders","Service providers","Manufacturers","NGOs","Government offices"],
+  f_eye:"Features", f_h:"Everything a growing business needs", f_lead:"Start with what you need today. Switch on more as you grow. Pay for the system, not per user.",
+  feats:[["Sales and invoices","Quotations, invoices, credit notes, delivery notes, VAT and withholding, printed with your own company details."],
+         ["Stock and purchases","Products with barcodes, several stores, purchase orders, supplier payments and stock counts."],
+         ["Accounting and reports","Books posted for you. Trial balance, profit and loss, balance sheet, VAT return and month closing."],
+         ["Payroll and attendance","Ethiopian income tax and pension. Attendance and leave feed the payslip automatically."],
+         ["Requests and approvals","Staff ask for payments, advances, travel and supplies. Supervisor approves, finance checks the budget, cashier pays."],
          ["Procurement and logistics","Purchase requests, quotations and awards by your own rules. Vehicles, fuel, trips and store transfers."],
-         ["Amharic and Ethiopian calendar","Switch language and dates in one click. Every screen and printout."],
-         ["Works offline","Keep selling when the connection drops. It catches up when the internet returns."]],
-  e_h:"Ready for the e-invoice system", e_lead:"Ethiopia's Ministry of Revenue is introducing registered electronic invoices (Directive No. 1142/2026). Zewderp prepares for it now.",
-  einv:["Every invoice, credit note and cancellation is kept ready in a queue, with your TIN and the buyer details.","Space for the registration number (IRN) and QR code on the printed invoice.","Reprints are marked DUPLICATE once the original is printed.","A checklist shows what you still need: portal details and the INSA digital certificate.","A warning when a document waits longer than the 72 hours the directive allows."],
+         ["Performance goals","Each employee writes goals with KPIs. The supervisor approves and HR keeps the record."],
+         ["Unlimited users and roles","Add as many people as you need and create your own roles, with exactly the access each one should have."],
+         ["Offline and in your language","Keep selling when the internet drops. Amharic, Tigrinya, Afaan Oromoo, English and the Ethiopian calendar."]],
+  how_eye:"How it works", how_h:"Ready in days, not months", how_lead:"We do the setup with you, so your team can start with their own data.",
+  how:[["Install and set up","We install Zewderp on your computer, load your products and customers, and match it to your type of business."],
+       ["Train your team","One day of training for your staff, with a short guide in your language."],
+       ["Run your business","Sell, buy, pay and report. Your books and tax figures stay up to date as you work."]],
+  e_eye:"E-invoice", e_h:"Ready for the e-invoice system", e_lead:"Ethiopia's Ministry of Revenue is introducing registered electronic invoices (Directive No. 1142/2026). Zewderp prepares for it now.",
+  einv:["Every invoice, credit note and cancellation is kept ready in a queue with your TIN and the buyer's details.","Space for the registration number (IRN) and QR code on the printed invoice.","A reprint is marked DUPLICATE once the original has been printed.","A checklist shows what you still need: portal details and the INSA digital certificate.","A warning when a document waits longer than the 72 hours the directive allows."],
   e_note:"The live connection is switched on as soon as the Ministry publishes its technical details and approves the software. Until then your invoices are ready and nothing is lost.",
-  p_h:"Simple pricing in birr", p_lead:"One price per business, not per feature. Prices are pilot prices for our first customers.",
-  plans:[["Starter","Shops and small traders","starter",["Sales, purchases, stock, expenses","Reports and VAT","Amharic and English","E-invoice ready"]],
-         ["Business","Small and medium businesses","business",["Everything in Starter","Payroll, attendance and leave","Requests, approvals, goals","Procurement and logistics"]],
+  p_eye:"Pricing", p_h:"Simple pricing in birr", p_lead:"One price for your business, with unlimited users. These are pilot prices for our first customers.",
+  plans:[["Starter","Shops and small traders","starter",["Sales, purchases, stock, expenses","Reports and VAT","All four languages","E-invoice ready"]],
+         ["Business","Small and medium businesses","business",["Everything in Starter","Payroll, attendance and leave","Requests, approvals and goals","Procurement and logistics"]],
          ["Organization","NGOs, manufacturers, government","org",["Everything in Business","Grants, projects and budgets","Production and many stores","Audit trail and priority support"]]],
-  choose:"Choose this plan", r_plan:"Plan", r_name:"Your name", r_biz:"Business name", r_phone:"Phone number",
-  r_need:"Please write your name and phone number so we can call you.", r_send_wa:"Send on WhatsApp", r_send_tg:"Send on Telegram", r_send_em:"Send by email", r_send_form:"Continue",
-  r_none:"Our contact details are coming soon. Please check back.", r_msg:"Hello, I am interested in the %plan% plan of Zewderp.",
-  best:"Most popular", per:"/ month", yr:"or %s / year", setup:"One-time setup: %s", users:"Unlimited users and your own roles", from:"from ",
+  best:"Most popular", per:"/ month", yr:"or %s / year", setup:"One-time setup: %s", users:"Unlimited users and your own roles", from:"from ", choose:"Choose this plan",
   p_note:"Pilot offer: the first 5 customers get 50% off for 12 months and the e-invoice connection at no extra cost, in return for honest feedback. Setup includes loading your products, customers and opening balances, and one day of staff training.",
-  c_h:"Let's talk", c_lead:"Tell us about your business and we will set up a free demo with your own products.", c_empty:"Contact details coming soon.",
-  foot:"Made in Ethiopia, for Ethiopian businesses." },
- am: { nav_features:"ባህሪያት", nav_einv:"ኢ-ደረሰኝ", nav_pricing:"ዋጋ", nav_contact:"ያግኙን",
-  h1:"ለኢትዮጵያ ንግዶች የተሠራ የሥራ አመራር ሲስተም", sub:"ሽያጭ፣ ክምችት፣ ሂሳብ አያያዝ፣ ደመወዝ፣ ግዢና ሪፖርቶች በአማርኛና በእንግሊዝኛ። የኢትዮጵያ ቀን መቁጠሪያ፣ የታክስ ደንቦች፣ ኢንተርኔት ሲቋረጥም ይሠራል።",
-  cta:"ነጻ ማሳያ ይያዙ", cta2:"ዋጋ ይመልከቱ",
-  f_h:"ሚያድግ ንግድ የሚፈልገው ሁሉ", f_lead:"ዛሬ በሚያስፈልግዎ ይጀምሩ። ሲያድጉ ተጨማሪ ክፍሎችን ያብሩ።",
-  feats:[["ሽያጭና ደረሰኞች","ዋጋ ጥቅሶች፣ ደረሰኞች፣ የክሬዲት ማስታወሻዎች፣ የማስረከቢያ ሰነዶች፣ ተ.እ.ታ. እና ተቀናሽ ግብር። በድርጅትዎ ዝርዝር ታትሞ ይወጣል።"],
-         ["ክምችትና ግዢ","ምርቶች፣ ባርኮድ፣ በርካታ መጋዘኖች፣ የግዢ ትዕዛዞች፣ የአቅራቢ ክፍያዎችና የክምችት ቆጠራ።"],
-         ["ሂሳብ አያያዝ","ድርብ ሂሳብ በራስ ይመዘገባል። የሙከራ ሚዛን፣ የትርፍና ኪሳራ፣ ሚዛን ሉህ፣ የተ.እ.ታ. ተመላሽ፣ የወር መዝጊያ።"],
-         ["ደመወዝና ሰራተኞች","የኢትዮጵያ የገቢ ግብርና ጡረታ፣ ደመወዝን የሚመግቡ ክትትልና ፈቃድ፣ የደመወዝ ወረቀቶች፣ የአፈጻጸም ግቦች።"],
-         ["ጥያቄዎችና ማጽደቂያዎች","ሰራተኞች ክፍያ፣ ቅድሚያ ክፍያ፣ ጉዞ፣ አቅርቦትና ተሽከርካሪ ይጠይቃሉ። ተቆጣጣሪ፣ ፋይናንስ ምርመራ፣ ገንዘብ ያዥ ይከፍላል።"],
+  q_eye:"Questions", q_h:"Frequently asked",
+  faq:[["Do we need internet?","No. Zewderp runs on your own computer and other devices in the shop connect over your Wi-Fi. When the internet is available it can send e-invoices and back up."],
+       ["Is there a limit on users?","No. Add everyone who needs it and create roles of your own. You pay for the plan, not per person."],
+       ["Can we change plans later?","Yes. You can switch on more parts of the system as your business grows."],
+       ["Is my data safe?","Your data stays on your computer. We set up daily backups and the system keeps a record of who did what."]],
+  c_eye:"Contact", c_h:"Let's talk", c_lead:"Choose a plan or just say hello. We reply the same day.",
+  r_plan:"Plan", r_name:"Your name", r_biz:"Business name", r_phone:"Phone number", r_need:"Please write your name and phone number so we can call you.",
+  r_send_wa:"Send on WhatsApp", r_send_tg:"Send on Telegram", r_send_em:"Send by email", r_send_form:"Continue", r_none:"Please call us using the details beside this form.",
+  r_msg:"Hello, I am interested in the %plan% plan of Zewderp.", w_call:"Call", w_wa:"WhatsApp", w_mail:"Email", foot:"Made in Ethiopia, for Ethiopian businesses." },
+ am: { nav_features:"ባህሪያት", nav_how:"እንዴት ይሠራል", nav_einv:"ኢ-ደረሰኝ", nav_pricing:"ዋጋ", nav_contact:"ያግኙን",
+  badge:"በኢትዮጵያ የተሠራ · ያለ ኢንተርኔት ይሠራል", h1:"መላ ንግድዎን በአንድ ቀላል ሲስተም ያስተዳድሩ",
+  sub:"ሽያጭ፣ ክምችት፣ ሂሳብ አያያዝ፣ ደመወዝ፣ ግዢና ሪፖርቶች በአማርኛ፣ ትግርኛ፣ ኦሮምኛና እንግሊዝኛ። የኢትዮጵያ ቀን መቁጠሪያ፣ የታክስ ደንቦችና ለኢ-ደረሰኝ ዝግጁ።",
+  cta:"ነጻ ማሳያ ይያዙ", cta2:"ዋጋ ይመልከቱ", forchips:["ሱቆችና ነጋዴዎች","አገልግሎት ሰጪዎች","አምራቾች","መንግሥታዊ ያልሆኑ ድርጅቶች","የመንግሥት መሥሪያ ቤቶች"],
+  f_eye:"ባህሪያት", f_h:"ሚያድግ ንግድ የሚፈልገው ሁሉ", f_lead:"ዛሬ በሚያስፈልግዎ ይጀምሩ። ሲያድጉ ተጨማሪ ያብሩ። የሚከፍሉት ለሲስተሙ ነው፣ ለእያንዳንዱ ተጠቃሚ አይደለም።",
+  feats:[["ሽያጭና ደረሰኞች","ዋጋ ጥቅሶች፣ ደረሰኞች፣ የክሬዲት ማስታወሻዎች፣ የማስረከቢያ ሰነዶች፣ ተ.እ.ታ. እና ተቀናሽ ግብር፣ በድርጅትዎ ዝርዝር ታትመው ይወጣሉ።"],
+         ["ክምችትና ግዢ","ምርቶች ከባርኮድ ጋር፣ በርካታ መጋዘኖች፣ የግዢ ትዕዛዞች፣ የአቅራቢ ክፍያዎችና የክምችት ቆጠራ።"],
+         ["ሂሳብ አያያዝና ሪፖርቶች","ሂሳብ በራስ ይመዘገባል። የሙከራ ሚዛን፣ ትርፍና ኪሳራ፣ ሚዛን ሉህ፣ የተ.እ.ታ. ተመላሽና የወር መዝጊያ።"],
+         ["ደመወዝና ክትትል","የኢትዮጵያ የገቢ ግብርና ጡረታ። ክትትልና ፈቃድ በራስ ወደ ደመወዝ ወረቀት ይገባል።"],
+         ["ጥያቄዎችና ማጽደቂያዎች","ሰራተኞች ክፍያ፣ ቅድሚያ ክፍያ፣ ጉዞና አቅርቦት ይጠይቃሉ። ተቆጣጣሪ ያጸድቃል፣ ፋይናንስ በጀት ይፈትሻል፣ ገንዘብ ያዥ ይከፍላል።"],
          ["ግዢና ሎጂስቲክስ","የግዢ ጥያቄዎች፣ ዋጋ ጥቅሶችና ሽልማት በራስዎ ደንብ። ተሽከርካሪዎች፣ ነዳጅ፣ ጉዞዎችና የመጋዘን ዝውውር።"],
-         ["አማርኛና የኢትዮጵያ ቀን መቁጠሪያ","ቋንቋና ቀን በአንድ ጠቅታ ይቀይሩ። በእያንዳንዱ ገጽና ህትመት።"],
-         ["ያለ ኢንተርኔት ይሠራል","ግንኙነት ቢቋረጥም መሸጥ ይቀጥሉ። ኢንተርኔት ሲመለስ ይደርሳል።"]],
-  e_h:"ለኢ-ደረሰኝ ሲስተም ዝግጁ", e_lead:"የገቢዎች ሚኒስቴር የተመዘገቡ ኤሌክትሮኒክ ደረሰኞችን እያስተዋወቀ ነው (መመሪያ ቁጥር 1142/2026)። ዘውድ አሁኑኑ ያዘጋጅዎታል።",
+         ["የአፈጻጸም ግቦች","እያንዳንዱ ሰራተኛ ግቦችን ከመለኪያዎች ጋር ይጽፋል። ተቆጣጣሪ ያጸድቃል፣ የሰው ኃይል መዝገቡን ይይዛል።"],
+         ["ያልተገደቡ ተጠቃሚዎችና ሚናዎች","የሚያስፈልግዎትን ያህል ሰው ይጨምሩ፤ ለእያንዳንዱ የሚገባውን መዳረሻ የሚሰጥ የራስዎን ሚና ይፍጠሩ።"],
+         ["ያለ ኢንተርኔት፣ በቋንቋዎ","ኢንተርኔት ቢቋረጥም መሸጥ ይቀጥሉ። አማርኛ፣ ትግርኛ፣ ኦሮምኛ፣ እንግሊዝኛና የኢትዮጵያ ቀን መቁጠሪያ።"]],
+  how_eye:"እንዴት ይሠራል", how_h:"በወራት ሳይሆን በቀናት ዝግጁ", how_lead:"ማስጀመሩን አብረን እናደርጋለን፤ ቡድንዎ በራሱ መረጃ ይጀምራል።",
+  how:[["መትከልና ማዘጋጀት","ዘውድን በኮምፒውተርዎ ላይ እንተክላለን፣ ምርቶችንና ደንበኞችን እንጭናለን፣ ከንግድዎ ዓይነት ጋር እናስማማለን።"],
+       ["ቡድንዎን ማሰልጠን","ለሰራተኞችዎ የአንድ ቀን ሥልጠና፣ በቋንቋዎ አጭር መመሪያ።"],
+       ["ንግድዎን ማስኬድ","ይሽጡ፣ ይግዙ፣ ይክፈሉ፣ ሪፖርት ያውጡ። ሂሳብዎና የታክስ አሃዞችዎ ሲሠሩ ወቅታዊ ይሆናሉ።"]],
+  e_eye:"ኢ-ደረሰኝ", e_h:"ለኢ-ደረሰኝ ሲስተም ዝግጁ", e_lead:"የገቢዎች ሚኒስቴር የተመዘገቡ ኤሌክትሮኒክ ደረሰኞችን እያስተዋወቀ ነው (መመሪያ ቁጥር 1142/2026)። ዘውድ አሁኑኑ ያዘጋጅዎታል።",
   einv:["እያንዳንዱ ደረሰኝ፣ የክሬዲት ማስታወሻና መሰረዝ ከቲንዎና ከገዢ ዝርዝር ጋር ተዘጋጅቶ በወረፋ ይቆያል።","በታተመው ደረሰኝ ላይ የምዝገባ ቁጥር (IRN) እና ኪውአር ኮድ ቦታ አለ።","ዋናው ከታተመ በኋላ እንደገና ሲታተም «ግልባጭ» ተብሎ ይመለክታል።","የሚቀርዎትን ዝርዝር ያሳያል፤ የፖርታል መረጃና የኢንሳ ዲጂታል ሰርተፊኬት።","ሰነድ መመሪያው ከፈቀደው 72 ሰዓት በላይ ሲቆይ ማስጠንቀቂያ ይሰጣል።"],
   e_note:"ሚኒስቴሩ የቴክኒክ ዝርዝሩን አውጥቶ ሶፍትዌሩን እንዳጸደቀ ቀጥተኛ ግንኙነቱ ይበራል። እስከዚያ ደረሰኞችዎ ዝግጁ ናቸው፤ ምንም አይጠፋም።",
-  p_h:"ቀላል ዋጋ በብር", p_lead:"ለአንድ ንግድ አንድ ዋጋ እንጂ በባህሪ አይደለም። ዋጋዎቹ ለመጀመሪያ ደንበኞቻችን የሙከራ ዋጋዎች ናቸው።",
-  plans:[["ጀማሪ","ሱቆችና አነስተኛ ነጋዴዎች","starter",["ሽያጭ፣ ግዢ፣ ክምችት፣ ወጪ","ሪፖርቶችና ተ.እ.ታ.","አማርኛና እንግሊዝኛ","ለኢ-ደረሰኝ ዝግጁ"]],
-         ["ንግድ","አነስተኛና መካከለኛ ንግዶች","business",["ሁሉም የጀማሪ","ደመወዝ፣ ክትትልና ፈቃድ","ጥያቄዎች፣ ማጽደቂያዎች፣ ግቦች","ግዢና ሎጂስቲክስ"]],
+  p_eye:"ዋጋ", p_h:"ቀላል ዋጋ በብር", p_lead:"ለንግድዎ አንድ ዋጋ፣ ያልተገደቡ ተጠቃሚዎች። እነዚህ ለመጀመሪያ ደንበኞቻችን የሙከራ ዋጋዎች ናቸው።",
+  plans:[["ጀማሪ","ሱቆችና አነስተኛ ነጋዴዎች","starter",["ሽያጭ፣ ግዢ፣ ክምችት፣ ወጪ","ሪፖርቶችና ተ.እ.ታ.","አራቱም ቋንቋዎች","ለኢ-ደረሰኝ ዝግጁ"]],
+         ["ንግድ","አነስተኛና መካከለኛ ንግዶች","business",["ሁሉም የጀማሪ","ደመወዝ፣ ክትትልና ፈቃድ","ጥያቄዎች፣ ማጽደቂያዎችና ግቦች","ግዢና ሎጂስቲክስ"]],
          ["ተቋም","መንግሥታዊ ያልሆኑ ድርጅቶች፣ አምራቾች፣ መንግሥት","org",["ሁሉም የንግድ","ድጋፍ፣ ፕሮጀክቶችና በጀቶች","ምርትና በርካታ መጋዘኖች","የኦዲት ዱካና ቅድሚያ ድጋፍ"]]],
-  choose:"ይህን እቅድ ይምረጡ", r_plan:"እቅድ", r_name:"ስምዎ", r_biz:"የንግድ ስም", r_phone:"ስልክ ቁጥር",
-  r_need:"እንድንደውልልዎ እባክዎ ስምዎንና ስልክ ቁጥርዎን ይጻፉ።", r_send_wa:"በዋትስአፕ ላክ", r_send_tg:"በቴሌግራም ላክ", r_send_em:"በኢሜል ላክ", r_send_form:"ቀጥል",
-  r_none:"የመገናኛ መረጃችን በቅርቡ ይቀርባል። እባክዎ ቆይተው ይመለሱ።", r_msg:"ሰላም፣ የዘውድ ኤርፒ %plan% እቅድ ፍላጎት አለኝ።",
-  best:"በጣም ተመራጭ", per:"/ በወር", yr:"ወይም %s / በዓመት", setup:"የአንድ ጊዜ ማስጀመሪያ፡ %s", users:"ያልተገደበ ተጠቃሚዎችና የራስዎ ሚናዎች", from:"ከ ",
+  best:"በጣም ተመራጭ", per:"/ በወር", yr:"ወይም %s / በዓመት", setup:"የአንድ ጊዜ ማስጀመሪያ፡ %s", users:"ያልተገደቡ ተጠቃሚዎችና የራስዎ ሚናዎች", from:"ከ ", choose:"ይህን እቅድ ይምረጡ",
   p_note:"የሙከራ ቅናሽ፡ የመጀመሪያዎቹ 5 ደንበኞች ለ12 ወር 50% ቅናሽና የኢ-ደረሰኝ ግንኙነት ያለ ተጨማሪ ክፍያ ያገኛሉ፤ በምላሹ ሐቀኛ አስተያየት። ማስጀመሪያው ምርቶችን፣ ደንበኞችንና የመክፈቻ ሂሳቦችን መጫንና የአንድ ቀን የሰራተኞች ሥልጠናን ያካትታል።",
-  c_h:"እንነጋገር", c_lead:"ስለ ንግድዎ ይንገሩን፤ በራስዎ ምርቶች ነጻ ማሳያ እናዘጋጃለን።", c_empty:"የመገናኛ መረጃ በቅርቡ ይቀርባል።",
-  foot:"በኢትዮጵያ፣ ለኢትዮጵያ ንግዶች የተሠራ።" } };
-var lang = "en", chosen = "";
-try { lang = localStorage.getItem("zewd_lang") || ((navigator.language || "").slice(0,2) === "am" ? "am" : "en"); } catch (e) {}
+  q_eye:"ጥያቄዎች", q_h:"በተደጋጋሚ የሚጠየቁ",
+  faq:[["ኢንተርኔት ያስፈልገናል?","አያስፈልግም። ዘውድ በራስዎ ኮምፒውተር ላይ ይሠራል፤ በሱቁ ውስጥ ያሉ ሌሎች መሣሪያዎች በዋይፋይ ይገናኛሉ። ኢንተርኔት ሲኖር ኢ-ደረሰኝ መላክና ምትኬ መያዝ ይችላል።"],
+       ["የተጠቃሚዎች ገደብ አለ?","የለም። የሚያስፈልገውን ሁሉ ይጨምሩ፤ የራስዎን ሚናዎች ይፍጠሩ። የሚከፍሉት ለእቅዱ ነው፣ ለእያንዳንዱ ሰው አይደለም።"],
+       ["በኋላ እቅድ መቀየር እንችላለን?","አዎ። ንግድዎ ሲያድግ ተጨማሪ የሲስተሙን ክፍሎች ማብራት ይችላሉ።"],
+       ["መረጃዬ ደህንነቱ የተጠበቀ ነው?","መረጃዎ በራስዎ ኮምፒውተር ላይ ይቆያል። ዕለታዊ ምትኬ እናዘጋጃለን፤ ሲስተሙ ማን ምን እንዳደረገ ይመዘግባል።"]],
+  c_eye:"ያግኙን", c_h:"እንነጋገር", c_lead:"እቅድ ይምረጡ ወይም ሰላም ይበሉን። በዚያው ቀን እንመልሳለን።",
+  r_plan:"እቅድ", r_name:"ስምዎ", r_biz:"የንግድ ስም", r_phone:"ስልክ ቁጥር", r_need:"እንድንደውልልዎ እባክዎ ስምዎንና ስልክ ቁጥርዎን ይጻፉ።",
+  r_send_wa:"በዋትስአፕ ላክ", r_send_tg:"በቴሌግራም ላክ", r_send_em:"በኢሜል ላክ", r_send_form:"ቀጥል", r_none:"እባክዎ ከቅጹ አጠገብ ባሉት ዝርዝሮች ይደውሉልን።",
+  r_msg:"ሰላም፣ የዘውድ ኤርፒ %plan% እቅድ ፍላጎት አለኝ።", w_call:"ይደውሉ", w_wa:"ዋትስአፕ", w_mail:"ኢሜል", foot:"በኢትዮጵያ፣ ለኢትዮጵያ ንግዶች የተሠራ።" },
+ ti: { nav_features:"ባህሪታት", nav_how:"ከመይ ይሰርሕ", nav_einv:"ኢ-ፋክቱር", nav_pricing:"ዋጋ", nav_contact:"ርኸቡና",
+  badge:"ኣብ ኢትዮጵያ ዝተሰርሐ · ብዘይ ኢንተርኔት ይሰርሕ", h1:"ዅሉ ንግድኹም ብሓደ ቀሊል ስርዓት ኣመሓድሩ",
+  sub:"ሽያጥ፣ ክዕለት፣ ሕሳብ፣ ደሞዝ፣ ግዥን ጸብጻባትን ብኣምሓርኛ፣ ትግርኛ፣ ኦሮምኛን እንግሊዝኛን። ናይ ኢትዮጵያ ካላንደር፣ ናይ ግብሪ ሕግታትን ንኢ-ፋክቱር ድሉውን።",
+  cta:"ነጻ ርኢቶ ሕተቱ", cta2:"ዋጋ ርኣዩ", forchips:["ድኳናትን ነጋዶን","ኣገልግሎት ሃቢ","ኣምራትን","ዘይመንግስታዊ ውድባት","ትካላት መንግስቲ"],
+  f_eye:"ባህሪታት", f_h:"እናዓበየ ዝኸይድ ንግዲ ዝደልዮ ዅሉ", f_lead:"ሎሚ ብዘድልየኩም ጀምሩ። ክትዓብዩ ከለኹም ተወሳኺ ኣብርሁ። እትኸፍልዎ ንስርዓቱ እዩ፣ ንነፍሲ ወከፍ ተጠቃሚ ኣይኮነን።",
+  feats:[["ሽያጥን ፋክቱራትን","ናይ ዋጋ ጥቕሲ፣ ፋክቱራት፣ ናይ ክረዲት መተሓሳሰቢ፣ ናይ ምርካብ ወረቐት፣ ቫትን ቅናሽ ግብርን፣ ብዝርዝር ትካልኩም ተሓትሞም ይወጹ።"],
+         ["ክዕለትን ግዥን","ተመሓሑዝ ብባርኮድ፣ ብዙሕ መኽዘናት፣ ትእዛዛት ግዥ፣ ክፍሊት ኣቕራቢ፣ ቆጸራ ክዕለት።"],
+         ["ሕሳብን ጸብጻባትን","ሕሳብ ባዕሉ ይምዝገብ። ሚዛን ፈተነ፣ ረብሓን ክሳረን፣ ሚዛን ወረቐት፣ ቫት ምምላስን ምዕጻው ወርሒን።"],
+         ["ደሞዝን ምክትታልን","ናይ ኢትዮጵያ ግብሪ እቶትን ጡረታን። ምክትታልን ፍቃድን ባዕሉ ናብ ወረቐት ደሞዝ ይኣቱ።"],
+         ["ሕቶታትን ምጽዳቕን","ሰራሕተኛታት ክፍሊት፣ ቅድመ ክፍሊት፣ ጉዕዞን ኣቕርቦትን ይሓቱ። ተቖጻጸሪ የጽድቕ፣ ፋይናንስ በጀት የረጋግጽ፣ ገንዘብ ሓዚ ይከፍል።"],
+         ["ግዥን ሎጂስቲክስን","ሕቶታት ግዥ፣ ጥቕሲታትን ሽልማትን ብናትኩም ሕጊ። መካይንን ነዳዲን ጉዕዞታትን መጋዘን ምስግጋርን።"],
+         ["ዕላማታት ኣፈጻጽማ","ነፍሲ ወከፍ ሰራሕተኛ ዕላማታት ምስ መለክዒታት ይጽሕፍ። ተቖጻጸሪ የጽድቕ፣ ሰብ ሓይሊ መዝገብ የጽንሕ።"],
+         ["ዘይተሓድዱ ተጠቀምቲን ተራታትን","ዘድልየኩም ዝኣክል ሰብ ወስኹ፤ ነፍሲ ወከፍ ዝግብኣ ኣፍቃድ ዝህብ ናትኩም ተራ ፍጠሩ።"],
+         ["ብዘይ ኢንተርኔት፣ ብቋንቋኹም","ኢንተርኔት እንተተቛሪጹ ሽጡ። ኣምሓርኛ፣ ትግርኛ፣ ኦሮምኛ፣ እንግሊዝኛን ናይ ኢትዮጵያ ካላንደርን።"]],
+  how_eye:"ከመይ ይሰርሕ", how_h:"ብመዓልታት እምበር ብኣዋርሕ ኣይኮነን ድሉው", how_lead:"ምጅማሩ ብሓባር ንገብሮ፤ ጉጅለኹም ብናቱ ሓበሬታ ይጅምር።",
+  how:[["ምትካልን ምድላውን","ዘውድ ኣብ ኮምፒተርኩም ንትክል፣ ተመሓሑዝን ዓማዊልን ንጽዕን፣ ምስ ዓይነት ንግድኹም የዛምድ።"],
+       ["ጉጅለኹም ምልምማድ","ንሰራሕተኛታትኩም ናይ ሓደ መዓልቲ ልምምድ፣ ብቋንቋኹም ሓጺር መምርሒ።"],
+       ["ንግድኹም ምእላይ","ሽጡ፣ ግዙእ፣ ክፈሉ፣ ጸብጻብ ኣውጽኡ። ሕሳብኩምን ናይ ግብሪ ቁጽርታትኩምን ክትሰርሑ ከለኹም ዘምኑ ይኾኑ።"]],
+  e_eye:"ኢ-ፋክቱር", e_h:"ንኤሌክትሮኒክ ፋክቱር ስርዓት ድሉው", e_lead:"ሚኒስትሪ እቶት ኢትዮጵያ ዝተመዝገቡ ኤሌክትሮኒክ ፋክቱራት የእቱ ኣሎ (መምርሒ ቑ. 1142/2026)። ዘውድ ሕጂ የዳልወኩም።",
+  einv:["ነፍሲ ወከፍ ፋክቱር፣ ናይ ክረዲት መተሓሳሰቢን ስረዛን ምስ ቲንኩምን ዝርዝር ዓሚልን ተዳልዩ ኣብ ተርታ ይጸንሕ።","ኣብ ዝሕተም ፋክቱር ቁጽሪ ምዝገባ (IRN) ን ኪዩኣር ኮድን ቦታ ኣሎ።","ቀዳማይ ምስ ተሓተመ ዳግማይ ምሕታም «ቅዳሕ» ተባሂሉ ይምልከት።","ዝተረፈኩም ዝርዝር የርኢ፤ ሓበሬታ ፖርታልን ናይ ኢንሳ ዲጂታል ምስክር ወረቐትን።","ሰነድ መምርሒ ካብ ዝፈቀዶ 72 ሰዓት ንላዕሊ ምስ ጸንሐ ጠንቀቕታ ይህብ።"],
+  e_note:"ሚኒስትሪ ቴክኒካዊ ዝርዝሩ ኣውጺኡ ሶፍትዌር ምስ ኣጽደቐ ቀጥታዊ ርክብ ይበርህ። ክሳብ ሽዑ ፋክቱራትኩም ድሉዋት እዮም፤ ዋላ ሓንቲ ኣይትጠፍእን።",
+  p_eye:"ዋጋ", p_h:"ቀሊል ዋጋ ብብር", p_lead:"ንንግድኹም ሓደ ዋጋ፣ ዘይተሓድዱ ተጠቀምቲ። እዚ ንቀዳምቲ ዓማዊልና ናይ ፈተነ ዋጋታት እዩ።",
+  plans:[["ጀማሪ","ድኳናትን ንኣሽቱ ነጋዶን","starter",["ሽያጥ፣ ግዥ፣ ክዕለት፣ ወጻኢ","ጸብጻባትን ቫትን","እቶም ኣርባዕተ ቋንቋታት","ንኢ-ፋክቱር ድሉው"]],
+         ["ንግዲ","ንኣሽቱን ማእከላይን ንግድታት","business",["ዅሉ ናይ ጀማሪ","ደሞዝ፣ ምክትታልን ፍቃድን","ሕቶታት፣ ምጽዳቕን ዕላማታትን","ግዥን ሎጂስቲክስን"]],
+         ["ትካል","ዘይመንግስታዊ ውድባት፣ ኣምራት፣ መንግስቲ","org",["ዅሉ ናይ ንግዲ","ደገፍ፣ ፕሮጀክትታትን በጀትን","ምህርታውን ብዙሕ መኽዘንን","ዱካ ኦዲትን ቀዳምነት ደገፍን"]]],
+  best:"ዝያዳ ዝመርጽዎ", per:"/ ወርሒ", yr:"ወይ %s / ዓመት", setup:"ናይ ሓደ ግዜ ምጅማር፡ %s", users:"ዘይተሓድዱ ተጠቀምትን ናትኩም ተራታትን", from:"ካብ ", choose:"እዚ መደብ ምረጹ",
+  p_note:"ናይ ፈተነ ቅናሽ፡ እቶም ቀዳሞት 5 ዓማዊል ን12 ወርሒ 50% ቅናሽን ናይ ኢ-ፋክቱር ርክብን ብዘይ ተወሳኺ ክፍሊት ይረኽቡ፤ ንሓቀኛ ርእይቶ። ምጅማር ተመሓሑዝ፣ ዓማዊልን ናይ መኽፈቲ ሕሳብን ምጽዓንን ናይ ሓደ መዓልቲ ልምምድ ሰራሕተኛን የጠቓልል።",
+  q_eye:"ሕቶታት", q_h:"ብተደጋጋሚ ዝሕተቱ",
+  faq:[["ኢንተርኔት የድልየና ድዩ?","ኣየድልን። ዘውድ ኣብ ናትኩም ኮምፒተር ይሰርሕ፤ ኣብ ድኳን ዘለዉ ካልኦት መሳርሒታት ብዋይፋይ ይራኸቡ። ኢንተርኔት ምስ ዝህሉ ኢ-ፋክቱር ምልኣኽን ምትካእን ይከኣል።"],
+       ["ደረት ተጠቀምቲ ኣሎ ድዩ?","የለን። ዘድልዮ ዅሉ ወስኹ፤ ናትኩም ተራታት ፍጠሩ። እትኸፍልዎ ንመደብ እምበር ንነፍሲ ወከፍ ሰብ ኣይኮነን።"],
+       ["ደሓር መደብ ክንቅይር ንኽእል ዲና?","እወ። ንግድኹም ምስ ዓበየ ተወሳኺ ክፍልታት ስርዓት ከተብርሁ ትኽእሉ።"],
+       ["ሓበሬታይ ውሑስ ድዩ?","ሓበሬታኹም ኣብ ናትኩም ኮምፒተር ይጸንሕ። ንዕለታዊ ተካእቲ ነዳሊ፤ ስርዓቱ መን ክንዲ ዝገበረ ይመዝግብ።"]],
+  c_eye:"ርኸቡና", c_h:"ንዛራረብ", c_lead:"መደብ ምረጹ ወይ ሰላም በሉና። ብዛኹ መዓልቲ ንምልስ።",
+  r_plan:"መደብ", r_name:"ስምኩም", r_biz:"ስም ንግዲ", r_phone:"ቁጽሪ ተሌፎን", r_need:"ክንድውለልኩም ስምኩምን ቁጽሪ ተሌፎንኩምን ጽሓፉ።",
+  r_send_wa:"ብዋትስኣፕ ሰዱ", r_send_tg:"ብተሌግራም ሰዱ", r_send_em:"ብኢሜል ሰዱ", r_send_form:"ቀጽሉ", r_none:"በጃኹም ብዝርዝር ጥቓ እዚ ቅጥዒ ደውሉልና።",
+  r_msg:"ሰላም፣ ናይ ዘውድ %plan% መደብ ፍላጎት ኣለኒ።", w_call:"ደውሉ", w_wa:"ዋትስኣፕ", w_mail:"ኢሜል", foot:"ኣብ ኢትዮጵያ፣ ንንግድታት ኢትዮጵያ ዝተሰርሐ።" },
+ om: { nav_features:"Amaloota", nav_how:"Akkamitti hojjeta", nav_einv:"E-Invoyisii", nav_pricing:"Gatii", nav_contact:"Nu qunnamaa",
+  badge:"Itoophiyaadhaan hojjetame · Interneetii malee hojjeta", h1:"Daldala keessan guutuu sirna salphaa tokkoon geggeessaa",
+  sub:"Gurgurtaa, kuusaa, herrega, mindaa, bittaa fi gabaasa Afaan Amaaraa, Tigiriffaa, Afaan Oromoo fi Ingliffaan. Kaalandarii Itoophiyaa, seera gibiraa, fi e-invoyisiitiif qophaa'aa.",
+  cta:"Agarsiisa bilisaa gaafadhaa", cta2:"Gatii ilaalaa", forchips:["Suuqii fi daldaltoota","Dhaabbilee tajaajilaa","Warshaalee","Dhaabbilee miti-mootummaa","Ministeeroota mootummaa"],
+  f_eye:"Amaloota", f_h:"Wanta daldalli guddachaa jiru barbaadu hundumaa", f_lead:"Waan har'a barbaaddan irraa jalqabaa. Yeroo guddattan dabalataa banaa. Kaffaltiin sirnaaf malee tokkoo tokkoo fayyadamaaf miti.",
+  feats:[["Gurgurtaa fi invoyisii","Gatii dhiyeessuu, invoyisii, yaadannoo liqii, waraqaa dhiyeessii, VAT fi gibira qabamu, odeeffannoo dhaabbata keessan waliin maxxanfamee ba'a."],
+         ["Kuusaa fi bittaa","Oomisha barkoodiin, kuusaa baay'ee, ajaja bittaa, kaffaltii dhiyeessaa fi lakkaa'insa kuusaa."],
+         ["Herrega fi gabaasa","Herregni ofumaan galmaa'a. Madaala qormaataa, bu'aa fi lammaffii, waraqaa madaalaa, deebii VAT fi cufaa ji'aa."],
+         ["Mindaa fi hordoffii","Gibira galii Itoophiyaa fi penshiinii. Hordoffii fi hayyama ofumaan waraqaa mindaa keessa seena."],
+         ["Gaaffii fi mirkaneessa","Hojjetaan kaffaltii, liqii dursaa, imala fi qarshii barbaada. Ol-aanaan mirkaneessa, faayinaansiin bajata ilaala, kaashiriin kaffala."],
+         ["Bittaa fi loojistiksii","Gaaffii bittaa, gatii dhiyeessuu fi moo'ichi seera keessaniin. Konkolaataa, boba'aa, imala fi dabarsa kuusaa."],
+         ["Kaayyoo raawwii","Hojjetaan tokkoon tokkoon isaa kaayyoo ibsaa waliin barreessa. Ol-aanaan mirkaneessa, HR galmee qaba."],
+         ["Fayyadamtoota fi gahee daangaa hin qabne","Nama barbaaddan hundaa dabalaa; gahee mataa keessanii kan tokkoon tokkoon isaa mirga isaa qabu uumaa."],
+         ["Interneetii malee, afaan keessaniin","Interneetiin yoo citus gurgurtaa itti fufaa. Afaan Amaaraa, Tigiriffaa, Oromoo, Ingliffaa fi kaalandarii Itoophiyaa."]],
+  how_eye:"Akkamitti hojjeta", how_h:"Ji'a osoo hin taane guyyaa muraasa keessatti qophaa'a", how_lead:"Qophii wal-nama taanee goonna; garee keessan odeeffannoo mataa isaaniitiin jalqaba.",
+  how:[["Kaa'uu fi qopheessuu","Zewderp kompiitara keessan irra kaa'a, oomishaa fi maamiltoota guuna, gosa daldala keessanitti simsisna."],
+       ["Garee barsiisuu","Hojjettoota keessaniif leenjii guyyaa tokkoo, qajeelfama gabaabaa afaan keessaniin."],
+       ["Daldala geggeessuu","Gurguraa, bitaa, kaffalaa, gabaasaa. Herregni fi lakkoofsi gibiraa yeroo hojjettan yeroo isaa irra turu."]],
+  e_eye:"E-Invoyisii", e_h:"Sirna e-invoyisiitiif qophaa'aa", e_lead:"Ministeerri Galiiwwanii Itoophiyaa invoyisii elektiroonikii galmaa'e (Qajeelfama Lakk. 1142/2026) fayyadamsiisaa jira. Zewderp amma isiniif qopheessa.",
+  einv:["Invoyisiin, yaadannoon liqii fi haqinsi hundi TIN keessanii fi odeeffannoo bitaa waliin tartiiba keessa qophaa'ee tura.","Lakkoofsa galmee (IRN) fi koodii QR invoyisii maxxanfame irratti iddoo qaba.","Maxxansni yeroo lammaffaa erga isa jalqabaa maxxanfamee booda «DUPLICATE» jedhamee mallattaa'a.","Tarree wanta isiniif hafe agarsiisa: odeeffannoo poortaalaa fi ragaa dijitaalaa INSA.","Dokumeentiin sa'aatii 72 qajeelfamni hayyamu caalaa yoo turee akeekkachiisa."],
+  e_note:"Wal-qunnamtiin kallattii yeroo Ministeerri odeeffannoo teknikaa maxxansee sooftiweerii mirkaneessu banama. Hanga sanaatti invoyisiin keessan qophaa'aadha; homtuu hin badu.",
+  p_eye:"Gatii", p_h:"Gatii salphaa Birriin", p_lead:"Daldala keessaniif gatii tokko, fayyadamtoota daangaa hin qabneen. Kunneen maamiltoota jalqabaatiif gatii yaalii dha.",
+  plans:[["Jalqabaa","Suuqii fi daldaltoota xixiqqaa","starter",["Gurgurtaa, bittaa, kuusaa, baasii","Gabaasa fi VAT","Afaan afran hundumaa","E-invoyisiitiif qophaa'aa"]],
+         ["Daldala","Daldalawwan xixiqqaa fi giddugaleessaa","business",["Hunda kan Jalqabaa","Mindaa, hordoffii fi hayyama","Gaaffii, mirkaneessa fi kaayyoo","Bittaa fi loojistiksii"]],
+         ["Dhaabbata","Dhaabbilee miti-mootummaa, warshaalee, mootummaa","org",["Hunda kan Daldalaa","Gargaarsa, pirojektii fi bajata","Oomisha fi kuusaa baay'ee","Hordoffii odiitii fi deeggarsa durtii"]]],
+  best:"Kan baay'ee filatame", per:"/ ji'aaf", yr:"yookiin %s / waggaaf", setup:"Kaffaltii jalqabaa al tokko: %s", users:"Fayyadamtoota fi gahee mataa daangaa hin qabne", from:"Eegalee ", choose:"Karoora kana filadhaa",
+  p_note:"Kennaa yaalii: maamiltoonni jalqabaa 5 ji'a 12f hir'ina 50% fi walqunnamtii e-invoyisii kaffaltii dabalataa malee argatu, yaada dhugaa kennuuf. Qophiin oomisha, maamiltoota fi herrega jalqabaa guuchuu fi leenjii hojjettootaa guyyaa tokko of keessaa qaba.",
+  q_eye:"Gaaffilee", q_h:"Gaaffilee yeroo baay'ee gaafataman",
+  faq:[["Interneetii nu barbaachisaa?","Lakki. Zewderp kompiitara keessan irratti hojjeta; meeshaalee suuqii keessa jiran WiFiin walitti hirmaatu. Interneetiin yeroo jiru e-invoyisii erguu fi kuusuu danda'a."],
+       ["Daangaan fayyadamtootaa jiraa?","Hin jiru. Nama barbaachisu hundaa dabalaa; gahee mataa keessanii uumaa. Karoorarraaf kaffaltu malee nama tokkoon tokkoon hin kaffaltan."],
+       ["Booda karoora jijjiiruu dandeenyaa?","Eeyyee. Daldalli keessan yeroo guddatu kutaalee sirnaa dabalataa banuu dandeessu."],
+       ["Odeeffannoon koo nageenya qabaa?","Odeeffannoon keessan kompiitara keessan irra jiraata. Kuusaa guyyaa guyyaa qopheessina; sirnichi eenyu maal akka hojjete galmeessa."]],
+  c_eye:"Nu qunnamaa", c_h:"Haa mari'annu", c_lead:"Karoora filadhaa yookiin nu nagaa jedhaa. Guyyuma sanatti deebii kennina.",
+  r_plan:"Karoora", r_name:"Maqaa keessan", r_biz:"Maqaa daldalaa", r_phone:"Lakkoofsa bilbilaa", r_need:"Maaloo isiniif bilbiluuf maqaa fi lakkoofsa bilbilaa keessan barreessaa.",
+  r_send_wa:"WhatsApp irratti ergi", r_send_tg:"Telegram irratti ergi", r_send_em:"Imeeliidhaan ergi", r_send_form:"Itti fufi", r_none:"Maaloo odeeffannoo bifa kana bira jiruun nuuf bilbilaa.",
+  r_msg:"Akkam, karoora %plan% Zewderp irratti fedhii qaba.", w_call:"Bilbilaa", w_wa:"WhatsApp", w_mail:"Imeelii", foot:"Itoophiyaan, daldala Itoophiyaatiif hojjetame." }
+};
+var LANGS = ["en","am","ti","om"], lang = "en", chosen = "";
+try { var s = localStorage.getItem("zewd_lang"); lang = LANGS.indexOf(s) >= 0 ? s : (LANGS.indexOf((navigator.language || "").slice(0,2)) >= 0 ? (navigator.language || "").slice(0,2) : "en"); } catch (e) {}
 function fmt(n) { return Number(n).toLocaleString("en-US"); }
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function svg(name) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + ICONS[name] + '</svg>'; }
 function render() {
-  var t = T[lang]; document.documentElement.lang = lang; document.getElementById("lang").textContent = lang === "en" ? "አማርኛ" : "English";
+  var t = T[lang]; document.documentElement.lang = lang; document.getElementById("lang").value = lang;
   document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = t[el.getAttribute("data-t")]; });
-  document.getElementById("featgrid").innerHTML = t.feats.map(function (f) { return '<div class="card"><h3>' + esc(f[0]) + '</h3><p>' + esc(f[1]) + '</p></div>'; }).join("");
+  document.getElementById("forchips").innerHTML = t.forchips.map(function (x) { return "<span>" + esc(x) + "</span>"; }).join("");
+  document.getElementById("featgrid").innerHTML = t.feats.map(function (f, i) { return '<div class="card feat reveal"><div class="ico">' + svg(ICON_ORDER[i]) + '</div><h3>' + esc(f[0]) + '</h3><p>' + esc(f[1]) + '</p></div>'; }).join("");
+  document.getElementById("steps").innerHTML = t.how.map(function (x) { return '<div class="step reveal"><h3>' + esc(x[0]) + '</h3><p>' + esc(x[1]) + '</p></div>'; }).join("");
   document.getElementById("einvlist").innerHTML = t.einv.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
+  document.getElementById("faqs").innerHTML = t.faq.map(function (x) { return '<details class="faq"><summary>' + esc(x[0]) + '</summary><p>' + esc(x[1]) + '</p></details>'; }).join("");
   document.getElementById("plans").innerHTML = t.plans.map(function (p, i) {
     var pr = PRICES[p[2]], from = p[2] === "org" ? t.from : "";
-    return '<div class="card plan' + (i === 1 ? " best" : "") + (chosen === p[2] ? " chosen" : "") + '" data-plan="' + p[2] + '" tabindex="0" role="button" aria-label="' + esc(t.choose + ": " + p[0]) + '">' + (i === 1 ? '<span class="tag">' + esc(t.best) + '</span>' : "") +
-      '<h3>' + esc(p[0]) + '</h3><p>' + esc(p[1]) + '</p><div class="price">' + from + fmt(pr.month) + ' <small>ETB ' + esc(t.per) + '</small></div>' +
-      '<p>' + esc(t.yr.replace("%s", "ETB " + fmt(pr.year))) + '</p><ul>' + p[3].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul>' +
-      '<p>' + esc(t.users) + '</p><p>' + esc(t.setup.replace("%s", "ETB " + fmt(pr.setup))) + '</p><button type="button" class="btn solid pick" tabindex="-1">' + esc(t.choose) + '</button></div>'; }).join("");
+    return '<div class="card plan' + (i === 1 ? " best" : "") + (chosen === p[2] ? " chosen" : "") + '" data-plan="' + p[2] + '" tabindex="0" role="button" aria-label="' + esc(t.choose + ": " + p[0]) + '">' +
+      (i === 1 ? '<span class="tag">' + esc(t.best) + '</span>' : "") + '<h3>' + esc(p[0]) + '</h3><div class="meta">' + esc(p[1]) + '</div>' +
+      '<div class="price">' + from + fmt(pr.month) + ' <small>ETB ' + esc(t.per) + '</small></div><div class="meta">' + esc(t.yr.replace("%s", "ETB " + fmt(pr.year))) + '</div>' +
+      '<ul>' + p[3].map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + '</ul><div class="meta">' + esc(t.users) + '</div><div class="meta">' + esc(t.setup.replace("%s", "ETB " + fmt(pr.setup))) + '</div>' +
+      '<button type="button" class="btn solid pick" tabindex="-1" style="margin-top:14px">' + esc(t.choose) + '</button></div>'; }).join("");
   var sel = document.getElementById("r_plan");
-  sel.innerHTML = t.plans.map(function (p) { return '<option value="' + p[2] + '"' + (chosen === p[2] ? " selected" : "") + '>' + esc(p[0]) + '</option>'; }).join("");
+  sel.innerHTML = t.plans.map(function (p) { return '<option value="' + p[2] + '">' + esc(p[0]) + '</option>'; }).join("");
   if (chosen) sel.value = chosen;
-  renderSend();
-  var c = [];
-  if (CONFIG.phone) c.push('<p><a href="tel:' + esc(CONFIG.phone.replace(/\s/g, "")) + '">' + esc(CONFIG.phone) + '</a></p>');
-  if (CONFIG.email) c.push('<p><a href="mailto:' + esc(CONFIG.email) + '">' + esc(CONFIG.email) + '</a></p>');
-  if (CONFIG.telegram) c.push('<p>Telegram: <a href="https://t.me/' + esc(CONFIG.telegram.replace("@", "")) + '">' + esc(CONFIG.telegram) + '</a></p>');
-  if (CONFIG.address) c.push('<p>' + esc(CONFIG.address) + '</p>');
-  document.getElementById("contacts").innerHTML = c.length ? c.join("") : '<p class="muted">' + esc(t.c_empty) + '</p>';
+  renderSend(); renderWays(); observe();
 }
-document.getElementById("lang").addEventListener("click", function () { lang = lang === "en" ? "am" : "en"; try { localStorage.setItem("zewd_lang", lang); } catch (e) {} render(); });
+function renderWays() {
+  var t = T[lang], w = [];
+  if (CONFIG.phone) w.push(['<a class="way" href="tel:' + esc(CONFIG.phone.replace(/\s/g, "")) + '"><span class="ico"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><span><small>' + esc(t.w_call) + '</small><b>' + esc(CONFIG.phone) + '</b></span></a>']);
+  if (CONFIG.whatsapp) w.push(['<a class="way" target="_blank" rel="noopener" href="https://wa.me/' + esc(CONFIG.whatsapp.replace(/[^0-9]/g, "")) + '"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 20l1.300-4.200A8 8 0 1 1 8.500 19z"/></svg></span><span><small>' + esc(t.w_wa) + '</small><b>' + esc(CONFIG.whatsapp) + '</b></span></a>']);
+  if (CONFIG.email) w.push(['<a class="way" href="mailto:' + esc(CONFIG.email) + '"><span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><span><small>' + esc(t.w_mail) + '</small><b>' + esc(CONFIG.email) + '</b></span></a>']);
+  if (CONFIG.telegram) w.push(['<a class="way" target="_blank" rel="noopener" href="https://t.me/' + esc(CONFIG.telegram.replace("@", "")) + '"><span class="ico"><svg viewBox="0 0 24 24"><path d="M21 4 3 11l5 2 2 6 3-4 5 4z"/></svg></span><span><small>Telegram</small><b>' + esc(CONFIG.telegram) + '</b></span></a>']);
+  if (CONFIG.address) w.push(['<div class="way"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.500"/></svg></span><span><b>' + esc(CONFIG.address) + '</b></span></div>']);
+  document.getElementById("contacts").innerHTML = w.join("");
+  var fab = document.getElementById("fab");
+  if (CONFIG.whatsapp) { fab.href = "https://wa.me/" + CONFIG.whatsapp.replace(/[^0-9]/g, ""); fab.style.display = "grid"; } else fab.style.display = "none";
+}
 function planName() { var o = document.getElementById("r_plan"); return o.options[o.selectedIndex] ? o.options[o.selectedIndex].textContent : ""; }
 function message() {
   var t = T[lang], f = function (id) { return document.getElementById(id).value.trim(); };
@@ -187,12 +396,11 @@ function message() {
 }
 function renderSend() {
   var t = T[lang], box = document.getElementById("r_send"), b = [];
-  if (CONFIG.formUrl) b.push(["form", t.r_send_form]);
-  if (CONFIG.whatsapp) b.push(["wa", t.r_send_wa]);
-  if (CONFIG.telegram) b.push(["tg", t.r_send_tg]);
-  if (CONFIG.email) b.push(["em", t.r_send_em]);
-  box.innerHTML = b.length ? b.map(function (x) { return '<button type="button" class="btn solid" data-send="' + x[0] + '">' + esc(x[1]) + '</button>'; }).join("")
-    : '<p class="muted">' + esc(t.r_none) + '</p>';
+  if (CONFIG.whatsapp) b.push(["wa", t.r_send_wa, "wa"]);
+  if (CONFIG.formUrl) b.push(["form", t.r_send_form, "solid"]);
+  if (CONFIG.telegram) b.push(["tg", t.r_send_tg, "solid"]);
+  if (CONFIG.email) b.push(["em", t.r_send_em, "line"]);
+  box.innerHTML = b.length ? b.map(function (x) { return '<button type="button" class="btn ' + x[2] + '" data-send="' + x[0] + '">' + esc(x[1]) + '</button>'; }).join("") : '<p class="muted">' + esc(t.r_none) + '</p>';
 }
 function send(kind) {
   var t = T[lang], err = document.getElementById("r_err"), v = function (id) { return document.getElementById(id).value.trim(); };
@@ -208,12 +416,17 @@ function send(kind) {
 function choose(plan) {
   chosen = plan; render();
   document.getElementById("req").scrollIntoView({ behavior: "smooth", block: "center" });
-  setTimeout(function () { document.getElementById("r_name").focus({ preventScroll: true }); }, 400);
+  setTimeout(function () { document.getElementById("r_name").focus({ preventScroll: true }); }, 450);
 }
+var io = ("IntersectionObserver" in window) ? new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { threshold: .12 }) : null;
+function observe() { document.querySelectorAll(".reveal:not(.in)").forEach(function (el) { if (io) io.observe(el); else el.classList.add("in"); }); }
 document.getElementById("plans").addEventListener("click", function (e) { var c = e.target.closest(".plan"); if (c) choose(c.getAttribute("data-plan")); });
 document.getElementById("plans").addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("plan")) { e.preventDefault(); choose(e.target.getAttribute("data-plan")); } });
 document.getElementById("r_send").addEventListener("click", function (e) { var b = e.target.closest("[data-send]"); if (b) send(b.getAttribute("data-send")); });
 document.getElementById("r_plan").addEventListener("change", function () { chosen = this.value; document.querySelectorAll(".plan").forEach(function (c) { c.classList.toggle("chosen", c.getAttribute("data-plan") === chosen); }); });
+document.getElementById("lang").addEventListener("change", function () { lang = this.value; try { localStorage.setItem("zewd_lang", lang); } catch (e) {} render(); });
+document.getElementById("menu").addEventListener("click", function () { var n = document.getElementById("nav"); var o = n.classList.toggle("open"); this.setAttribute("aria-expanded", o); });
+document.getElementById("nav").addEventListener("click", function (e) { if (e.target.tagName === "A") this.classList.remove("open"); });
 document.getElementById("yr").textContent = new Date().getFullYear();
 render();
 </script>
